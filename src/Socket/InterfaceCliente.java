@@ -16,13 +16,12 @@ public class InterfaceCliente {
 		
 	   private String host;
 	   private int porta;
-	   private boolean status = false;
 	   private JButton conectaServer, closeServer, um, dois, tres;
 	   private JFrame frame;
 	   private JTextField textField1, textField2;    
 	   private PrintStream saida; 
 	   private String comandoSaida = "";
-	   Cliente cli;
+	   private Cliente cli;
 	   
 	   public InterfaceCliente () {
 	   }
@@ -34,7 +33,7 @@ public class InterfaceCliente {
 	   
 	   public void constroiFrame() {
 		   		// Controi Frame
-		   		frame = new JFrame("Cliente");
+		   		frame = new JFrame("Ultimate Battle - Cliente");
 		   		// set frame layout
 		        frame.setLayout( new FlowLayout() ); 
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,9 +45,9 @@ public class InterfaceCliente {
 				textField2 = new JTextField( 10 );    
 				conectaServer = new JButton( "Conecta no servidor" );
 				closeServer = new JButton( "Desconecta" );
-				um = new JButton( "1" );
-				dois = new JButton( "2" );
-				tres = new JButton( "3" );
+				um = new JButton( "Escolhe Posicao X para Navio" );
+				dois = new JButton( "Ataca em posicao X do mapa do inimigo" );
+				tres = new JButton( "Informa que foi atingido" );
 				
 				// Adiciona objetos no frame
 				frame.add( textField1 );
@@ -81,19 +80,19 @@ public class InterfaceCliente {
 		      public void actionPerformed( ActionEvent event )
 		      {
 		    	  if (event.getSource() == um) {
-		    		  	comandoSaida = "1";
+		    		  	comandoSaida = "#";
 		    	  }
 		    	  else if (event.getSource() == dois) {
-		    		  comandoSaida = "2";
+		    		  comandoSaida = "@";
 		    	  }
 		    	  else if (event.getSource() == tres) {
-		    		  comandoSaida = "3";
+		    		  comandoSaida = "$";
 		    	  }
 		    	  saida.println(comandoSaida);
 		    	  //System.out.println(comandoSaida);
 		      } 
 		   } 
-		// Manipulador de Acoes - Botoes (Conecta, Desconecta) - Acoes
+		// Manipulador de Acoes - Botoes (Conecta, Desconecta)
 		private class ButtonConexaoHandler implements ActionListener  {
 		      public void actionPerformed( ActionEvent event )
 		      {
@@ -101,16 +100,17 @@ public class InterfaceCliente {
 		        	  if (event.getSource() == conectaServer) {
 		        		  host = textField1.getText();
 		        		  porta = Integer.parseInt(textField2.getText());
+		        		  // Instancia cliente
 		        		  cli = new Cliente(host,porta);
 		        		  saida = cli.conecta();
-		        		  // 
-	        			  conectaServer.setEnabled(false);
-	        			  closeServer.setEnabled(true);
+	        			  conectaServer.setEnabled(false);		// Desabilita botao
+	        			  closeServer.setEnabled(true); 		// Habilita botao
 		        	  }
 		        	  else if (event.getSource() == closeServer) {
-		        		  cli.desconta(); 
+		        		  cli.desconecta(); 
 		        		  conectaServer.setEnabled(true);
 		        		  closeServer.setEnabled(false);
+
 		        	  }
 		          }
 		          catch (IOException e)
@@ -119,13 +119,6 @@ public class InterfaceCliente {
 		          }
 		      } 
 		 } 
-		// Getters and Setters
-		public boolean isStatus() {
-			return status;
-		}
-		public void setStatus(boolean status) {
-			this.status = status;
-		}
 		// Teste Main
 		public static void main(String[] args) throws  UnknownHostException, IOException {
 		     // inicia o cliente 

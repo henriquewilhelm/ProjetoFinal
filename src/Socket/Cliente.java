@@ -34,7 +34,7 @@ public class Cliente {
 		       		   	return saida;	
 		   }
 	   	// Metodo desconecta do socket
-		public void desconta() throws IOException{
+		public void desconecta() throws IOException{
 		        		  cliente.close();  // Fecha socket 
 		        		  status = false;	// false == desconectado
 		        		  saida.close();	// Fecha o PrintStream (Saida padrao)
