@@ -1,12 +1,5 @@
 package Jogo;
 
-/** 
- * Fiquei estudando mais sobre Interface Grafica e acabei deixando de lado a parte 
- * do Mapa, Peças/Navios e Jogador, ainda falta pensar nesses detalhes...
- * Aqui no Pacote "Jogo" vão as regras e as classes que eu citei acima, se ele funcionar
- * aqui funciona em qualquer interface grafica!! 
- */
-
 public class Jogador {
 
 	private String nome;

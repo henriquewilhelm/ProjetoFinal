@@ -1,4 +1,5 @@
 // (c)2014|carlosedusousa.
+
 package Arquivos;
 
 import java.io.BufferedReader;

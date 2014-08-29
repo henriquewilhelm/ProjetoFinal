@@ -11,7 +11,7 @@ import javax.swing.*;
 import Socket.Cliente;
 
 /**
- * Batalha Naval (Ultimate Batelhe) v1.0 Versao 2.0 de Interface Grafica
+ * Batalha Naval (Ultimate Battle) v1.0 Versao 2.0 de Interface Grafica
  * (telaConexao) Essa classe eh responsavel pela Tela de Conexao, possui um
  * Textfiled: Servidor/Porta e Botoes: Conecta/Desconceta, etc... Ela importa o
  * pacote Socket ja desenvolvido (Servidor/Cliente) e realiza a conexao
@@ -43,7 +43,6 @@ public class TelaConexao {
 	public TelaConexao() {
 		// Cria nova Tela (JPanel)
 		setPanelMenuConexao(new JPanel(new FlowLayout(4, 1, 1)));
-
 		// Cria os Componentes - Campos (TextField) e botoes (JButton)
 		setServer(new JLabel("Servidor:"));
 		setTextFieldHost(new JTextField(30));
@@ -85,14 +84,14 @@ public class TelaConexao {
 
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == getOpUm()) {
-				comandoSaida = "#";
+				setComandoSaida("#");
 			} else if (event.getSource() == getOpDois()) {
-				comandoSaida = "@";
+				setComandoSaida("@");
 			} else if (event.getSource() == getOpTres()) {
-				comandoSaida = "$";
+				setComandoSaida("$");
 			}
-			saida.println(comandoSaida);
-			System.out.println(comandoSaida);
+			//saida.println(comandoSaida);
+			//System.out.println(comandoSaida);
 		}
 	}
 

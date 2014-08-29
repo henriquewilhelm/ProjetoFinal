@@ -11,6 +11,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+/** Batalha Naval (Ultimate Battle) - Versao 1.0 da Interface Grafica
+ * Tela de Servidor
+ */
+
 public class InterfaceCliente {
 	     
 		

@@ -2,6 +2,12 @@ package Socket;
 import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Thread Cliente Input)
+ * Essa classe (thread) é responsavel pelo recebimento dos dados de cada servidor para nao ocupar a 
+ * a classe "Pai".
+ */
 
 public class ThreadClientInput implements Runnable {
 	 

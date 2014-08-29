@@ -1,0 +1,118 @@
+
+INTERFACES GRAFICAS
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0 da Interface Grafica 
+ * (telaCliente)
+ * Essa classe alem de conter o main (executavel) eh responsavel por agrupar
+ * todas as Telas (JPanel) dentro de um Conteiner (agrupador de JPanel) para 
+ * organizar a disposição (lugar) de cada componente com mais facilidade. 
+ * A classe main cria a Janela (JFrame), a classe adiciona as Telas (JPanel) ao Conteiner 
+ * de Telas e as organiza... 
+ * Possui as seguintes telas até aqui: TelaTabuleiros, TelaConexao, TelaMenuImagens e TelaChat 
+ * Autor: Henrique W.
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) v1.0 Versao 2.0 de Interface Grafica
+ * (telaConexao) 
+ * Essa classe eh responsavel pela Tela de Conexao, possui um
+ * Textfiled: Servidor/Porta e Botoes: Conecta/Desconceta, etc... Ela importa o
+ * pacote Socket ja desenvolvido (Servidor/Cliente) e realiza a conexao
+ * ClientSocket com ServerSocket pela sua interface, nao possui relaçao com
+ * nenhuma outra Tela pelo menos até aqui, apenas Conecta e Desconta... 
+ * Autor: Henrique W.
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica 
+ * (telaTabuleiros)
+ * Essa classe eh responsavel pela Tela dos Tabuleiros (Player 1 e 2)
+ * Cada tabuleiro tem 100 Botoes: 0-99, a interface eh preparada para
+ * marcar os 5 primeiros "clicks" no primeiro tabuleiro que representa a escolha
+ * da posicao das Peças/Navios, depois só aceita "clicks" no segundo tabuleiro
+ * (Player 2).
+ * Autor: Henrique W.
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) v1.0 - Versao 2.0 de Interface Grafica
+ * (telaMenuImagens)
+ * Esta classe eh responsavel pela Tela do Menu de Imagens. Ela  possui 5 Label`s
+ * com Imagens (5 imagens com Peças/Navios e 1 com Mensagem de OK).
+ * Autor: Henrique W.
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica
+ * (TelaChat) 
+ * Esta classe eh responsavel pela Tela do Chat (Bate-Papo). Ela
+ * possui dois Campos de Texto (TextField) e um botão enviar (JButton)!  
+ * Autor: Henrique W.
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica 
+ * (TelaChat) 
+ * Thread (Processo Filho) que monitora o obejto Jogador, principalmente o numero de
+ * rodadas para alterar a telaMenusImagens, trocando as imagens (Label`s) quando receber
+ * um "click" na telaTabuleiro (troca imagem com  Peca/Navio por imagem com Mensagem OK).
+ * Assim as Telas (JPanel) podem se relacionar...
+ */
+
+SOCKET SERVER / CLIENTE
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Servidor)
+ * Essa classe é responsavel por cria um serversocket, ela espera pela conexao de dois clientes,
+ * uma thread fica responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
+ * a classe enquanto ela espera por uma saida, que conta com ajuda de um ArrayList de PrintStream,
+ * alem deste atributo ela possui uma porta.
+ * Obs: A ideia é criar um banco de dados para cadastro e login dos jogadores, alem de gerar um 
+ * log em arquivo... 
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Thread Server Input)
+ * Essa classe (thread) é responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
+ * a classe "Pai".
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Cliente)
+ * Essa classe é responsavel por cria um socket, ela realiza a conexao com o host e porta passados por
+ * parametro, uma thread fica responsavel pelo recebimento dos dados do servidor para nao ocupar a 
+ * a classe enquanto ela espera por uma saida.
+ */
+
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Thread Cliente Input)
+ * Essa classe (thread) é responsavel pelo recebimento dos dados de cada servidor para nao ocupar a 
+ * a classe "Pai".
+ */
+
+
+JOGO
+
+/** Autor: Henrique Wilhelm
+ * Herói (jogo)
+ * 
+ * Nosso Heroi possui como seus atributos: Seu nome, sua posição atual no mapa (int),
+ *  quantidade de vida restante (int), seu poder de ataque e seu poder de defesa(double).
+ * 
+ * Durante a criação do Heroi, aonde ele sempre possui um nome, uma posição inicial, quantos 
+ * pontos de vida ele tem, quanto é seu poder de ataque e quanto é seu poder de defesa (construtor)
+ */
+
+
+/** Autor: Henrique Wilhelm
+ * O Mapa possui 2 atributos:
+ * - Dimensão é uma matriz de tamanho definido durante a construção da 
+ *  classe
+ * - Obstáculos, são array contendo, ? posições [x,y] definidas pelo 
+ *   construtor, tendo como limite as dimensões do mapa.
+ */ 

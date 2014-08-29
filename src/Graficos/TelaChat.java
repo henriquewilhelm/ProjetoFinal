@@ -1,12 +1,17 @@
 package Graficos;
 
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintStream;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -20,21 +25,25 @@ public class TelaChat {
 	// Declara Tela (JPanel)
 	private JPanel panelChat; 
 	// Declara Componentes
-	private JTextField textFieldConversas;
+	private JTextArea textAreaConversas;
 	private JTextField textFieldChat;
 	private JButton buttonChat; // Enviar
+	
+	private TelaConexao telaConexao;
 	// Construtor da Tela
-	public TelaChat(){
+	public TelaChat(TelaConexao telaConexao){
+		this.telaConexao = telaConexao;
 		// Cria nova Tela (JPanel)
-		setPanelChat(new JPanel(new GridLayout(7, 1, 1, 1)));
-		setTextFieldConversas(new JTextField("Aqui o bate-papo entre os jogadores...\nTestanto 1, 2."));
+		setPanelChat(new JPanel(new GridLayout(3, 1, 1, 1)));
+		setTextAreaConversas(new JTextArea(1,1));
 		setTextFieldChat(new JTextField("Comece o chat...", 250));
 		setButtonChat(new JButton("Enviar"));
 		// Habilita / Disabilita edicao
 		getTextFieldChat().setEditable(true);
-		getTextFieldConversas().setEditable(false);
+		getTextAreaConversas().setEditable(false);
+		getTextAreaConversas().setSize(50, 50);
 		// Adicionando Componentes na nova Tela (JPanel)
-		getPanelChat().add(getTextFieldConversas());
+		getPanelChat().add(getTextAreaConversas());
 		getPanelChat().add(getTextFieldChat());
 		getPanelChat().add(getButtonChat());
 		// Manipulador de Eventos (Click, Entrada do Mouse/Teclado, etc)
@@ -48,19 +57,27 @@ public class TelaChat {
 			try {
 				if (e.getSource() == getButtonChat()) {
 					System.out.println(getTextFieldChat().getText());
+					//Printa na saida
+					telaConexao.getSaida().println(getTextFieldChat().getText());
 				}
-
+				String cmd = e.getActionCommand();
+				if (cmd.equals("atualiza"))
+						setTextAreaConversas(getTextAreaConversas().getText() + "\n" + telaConexao.getCli().getComandoEntrada());
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
-				System.out.println(exception);
+				exception.printStackTrace();
 			}
 		}
+		
 	}
-	public JTextField getTextFieldConversas() {
-		return textFieldConversas;
+	public JTextArea getTextAreaConversas() {
+		return textAreaConversas;
 	}
-	public void setTextFieldConversas(JTextField textFieldConversas) {
-		this.textFieldConversas = textFieldConversas;
+	public void setTextAreaConversas(JTextArea textAreaConversas) {
+		this.textAreaConversas = textAreaConversas;
+	}
+	public void setTextAreaConversas(String texto) {
+		this.textAreaConversas.setText(texto);
 	}
 	public JTextField getTextFieldChat() {
 		return textFieldChat;

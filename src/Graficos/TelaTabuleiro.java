@@ -8,12 +8,13 @@ import javax.swing.*;
 import Jogo.Jogador;
 
 /**
- * Batalha Naval (Ultimate Batelhe) - Versao 2.0 de Interface Grafica (telaTabuleiros)
+ * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica (telaTabuleiros)
  * Essa classe eh responsavel pela Tela dos Tabuleiros (Player 1 e 2)
  * Cada tabuleiro tem 100 Botoes: 0-99, a interface eh preparada para
  * marcar os 5 primeiros "clicks" no primeiro tabuleiro que representa a escolha
  * da posicao das Peças/Navios, depois só aceita "clicks" no segundo tabuleiro
- * (Player 2). Autor: Henrique W.
+ * (Player 2).
+ * Autor: Henrique W.
  */
 
 public class TelaTabuleiro implements ActionListener {
@@ -29,9 +30,11 @@ public class TelaTabuleiro implements ActionListener {
 	private int[] posicaoEscolhida = new int[5];
 	// Nossa classe (Importada de Jogo.Jogador)
 	private Jogador jogador;
+	private TelaImagens telaImagens;
 	// Contrutor da Tela
-	public TelaTabuleiro(Jogador jogador) { // Nossa classe (Importada de Jogo.Jogador)
+	public TelaTabuleiro(TelaImagens telaImagens, Jogador jogador) { // Nossa classe (Importada de Jogo.Jogador)
 		this.jogador = jogador;
+		this.telaImagens = telaImagens;
 		// Cria novas Telas (JPanel`s)
 		setTabuleiro1(new JPanel(new GridLayout(10, 1, 0, 0)));
 		setTabuleiro2(new JPanel(new GridLayout(10, 1, 0, 0)));
@@ -68,6 +71,7 @@ public class TelaTabuleiro implements ActionListener {
 						jogador.setNumRodadas(jogador.getNumRodadas() + 1);
 						// Desabilita Botao (Marca Peca/Navio)
 						getButtonsTab1()[contador].setEnabled(false);
+						telaImagens.getAuxiliar().setActionCommand("teste");
 					}
 				} else {
 

@@ -5,6 +5,15 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Cliente)
+ * Essa classe é responsavel por cria um socket, ela realiza a conexao com o host e porta passados por
+ * parametro, uma thread fica responsavel pelo recebimento dos dados do servidor para nao ocupar a 
+ * a classe enquanto ela espera por uma saida.
+ */
+
+
 public class Cliente {
 	     
 	   private String host;
@@ -12,7 +21,7 @@ public class Cliente {
 	   private boolean status = false;
 	   private Socket cliente;
 	   private PrintStream saida; 
-	   private String comandoEntrada;  
+	   private String comandoEntrada = "";  
 	  
 	   // Construtor (Recebe nome do host e porta)
 	   public Cliente (String host, int porta) throws UnknownHostException, IOException {

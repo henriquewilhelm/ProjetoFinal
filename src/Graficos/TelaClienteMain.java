@@ -3,6 +3,7 @@ package Graficos;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.UnknownHostException;
 
 import javax.swing.*;
@@ -10,13 +11,13 @@ import javax.swing.*;
 import Jogo.Jogador;
 
 /**
- * Batalha Naval (Ultimate Batelhe) - Versao 2.0 de Interface Grafica (telaCliente)
+ * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica (telaCliente)
  * Essa classe alem de conter o main (executavel) eh responsavel por agrupar
- * todas as Telas (JPanel) dentro de um conteiner (agrupador de JPanel) para 
+ * todas as Telas (JPanel) dentro de um Conteiner (agrupador de JPanel) para 
  * organizar a disposição (lugar) de cada componente com mais facilidade. 
- * A classe cria a Janela (JFrame), adiciona as Telas (JPanel) a Janela (JFrame) 
- * e as organiza... Possui as seguintes telas até aqui: TelaTabuleiros, TelaConexao,
- * TelaMenuImagens e TelaChat 
+ * A classe main cria a Janela (JFrame), a classe adiciona as Telas (JPanel) ao Conteiner 
+ * de Telas e as organiza... 
+ * Possui as seguintes telas até aqui: TelaTabuleiros, TelaConexao, TelaMenuImagens e TelaChat 
  * Autor: Henrique W.
  */
 
@@ -24,9 +25,9 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 	
 	private Container cont;
 	// Classes do projeto
-	private TelaTabuleiro tabuleiro;
-	private TelaMenuImagens menuImagens;
-	private TelaConexao menuConexao;
+	private TelaConexao telaConexao;
+	private TelaTabuleiro telaTabuleiro;
+	private TelaImagens telaImagens;
 	private TelaChat telaChat;
 
 	public TelaClienteMain() {
@@ -39,15 +40,14 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			cont.setLayout(new BorderLayout());
 
 			// Cria Telas
-			menuConexao = new TelaConexao();
-			tabuleiro = new TelaTabuleiro(player);
-			menuImagens = new TelaMenuImagens(player);
-			menuConexao = new TelaConexao();
-			telaChat = new TelaChat();
+			telaConexao = new TelaConexao();
+			telaImagens = new TelaImagens(player);
+			telaTabuleiro = new TelaTabuleiro(telaImagens, player);
+			telaChat = new TelaChat(telaConexao);
 
 			// Inicializa Thread responsavel por verificar Rodadas de cada Jogador
 			// e controla as Telas quando necessario.
-			new ThreadMonitoraTelas(menuImagens).start();
+			new ThreadMonitoraTelas(telaConexao, telaTabuleiro, telaImagens, telaChat).start();
 			/**
 			 * MAIOR DIFICULDADE ATE AQUI:
 			 * 
@@ -71,12 +71,12 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			 * Telas. Henrique Wilhelm.
 			 */
 
-			cont.add(menuConexao.getPanelMenuConexao(), BorderLayout.NORTH);
-			cont.add(tabuleiro.getTabuleiro1(), BorderLayout.WEST);
-			cont.add(tabuleiro.getTabuleiro2(), BorderLayout.EAST);
-			cont.add(menuImagens.getPanelOpcoes(), BorderLayout.CENTER);
-			cont.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
-
+			cont.add(telaConexao.getPanelMenuConexao(), BorderLayout.PAGE_START);
+			cont.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
+			cont.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
+			cont.add(telaImagens.getPanelImagens(), BorderLayout.CENTER);
+			cont.add(telaChat.getPanelChat(), BorderLayout.PAGE_END);
+			
 		} catch (Exception exception) {
 			System.out.println(exception);
 			exception.printStackTrace();

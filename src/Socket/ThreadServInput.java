@@ -2,6 +2,13 @@ package Socket;
 
 import java.util.Scanner;
 import java.io.InputStream;
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Thread Server Input)
+ * Essa classe (thread) é responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
+ * a classe "Pai".
+ */
+
 
 public class ThreadServInput implements Runnable {
 	 
@@ -33,7 +40,7 @@ public class ThreadServInput implements Runnable {
 		   				/** A primeira letra da String sera o identificador
 		   				 * # - Escolha de Pecas/Posicoes (Enquanto < numero De Navio)
 		   				 * @ - Ataque ao oponente
-		   				 * $ - Sistema (Quit)
+		   				 * $ - Sistema (Quit, etc)
 		   				 * Demais seram identificadas como Chat...
 		   				 */
    							String msg = s.nextLine();

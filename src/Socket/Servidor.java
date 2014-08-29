@@ -6,7 +6,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
-
+/**
+ * Batalha Naval (Ultimate Battle) - Versao 2.0
+ * (Servidor)
+ * Essa classe é responsavel por cria um serversocket, ela espera pela conexao de dois clientes,
+ * uma thread fica responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
+ * a classe enquanto ela espera por uma saida, que conta com ajuda de um ArrayList de PrintStream,
+ * alem deste atributo ela possui uma porta.
+ * Obs: A ideia é criar um banco de dados para cadastro e login dos jogadores, alem de gerar um 
+ * log em arquivo... 
+ */
 
 public class Servidor {
 	 
