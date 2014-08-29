@@ -3,21 +3,20 @@ package Graficos;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.UnknownHostException;
-
 import javax.swing.*;
 
 import Jogo.Jogador;
 
 /**
- * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica (telaCliente)
+ * Batalha Naval (Ultimate Battle) - Versao 2.1 de Interface Grafica 
+ * (telaCliente)
  * Essa classe alem de conter o main (executavel) eh responsavel por agrupar
  * todas as Telas (JPanel) dentro de um Conteiner (agrupador de JPanel) para 
- * organizar a disposição (lugar) de cada componente com mais facilidade. 
- * A classe main cria a Janela (JFrame), a classe adiciona as Telas (JPanel) ao Conteiner 
+ * organizar a disposicao (lugar) de cada componente com mais facilidade. 
+ * O main cria a Janela (JFrame), a classe adiciona as Telas (JPanel) ao Conteiner 
  * de Telas e as organiza... 
- * Possui as seguintes telas até aqui: TelaTabuleiros, TelaConexao, TelaMenuImagens e TelaChat 
+ * Possui as seguintes telas ate aqui: TelaTabuleiros, TelaConexao, TelaImagens e TelaChat 
  * Autor: Henrique W.
  */
 
@@ -37,14 +36,15 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			Jogador player = new Jogador("Capitao Jack");
 			// Cria conteiner, facilita a organizacao e adicao de nova Telas (JPanel)
 			cont = getContentPane();
-			cont.setLayout(new BorderLayout());
-
+			//cont.setLayout(new Boarder);
+			
 			// Cria Telas
 			telaConexao = new TelaConexao();
 			telaImagens = new TelaImagens(player);
-			telaTabuleiro = new TelaTabuleiro(telaImagens, player);
+			telaTabuleiro = new TelaTabuleiro(player);
 			telaChat = new TelaChat(telaConexao);
-
+			
+		
 			// Inicializa Thread responsavel por verificar Rodadas de cada Jogador
 			// e controla as Telas quando necessario.
 			new ThreadMonitoraTelas(telaConexao, telaTabuleiro, telaImagens, telaChat).start();
@@ -56,7 +56,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			 * todas sempre ficam "ocupadas" aguardando algum evento (click,
 			 * entrada do teclado, etc)... Estava com dificuldade de
 			 * compartilhar o Numero de Rodadas, tentei de varias maneiras mas
-			 * não consegui de outro jeito! Os botoes da TelaTabuleiro nao se
+			 * nï¿½o consegui de outro jeito! Os botoes da TelaTabuleiro nao se
 			 * relacionam com os botoes da TelaMenuConexao, nem com nenhuma
 			 * outra Tela, sao objetos diferentes reunidos dentro do conteiner
 			 * que "monta" a Janela, ate onde entendi a classe JFrame fica
@@ -64,7 +64,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			 * porque a "comunicacao" soh existia apos um evento. Como se trata
 			 * de um jogo e um botao influencia diretamente em outro, como no
 			 * nosso caso por exemplo, na primeira etapa do Batalha Naval as 5
-			 * primeiras Rodadas são referentes a escolha da Posicao de cada uma
+			 * primeiras Rodadas sï¿½o referentes a escolha da Posicao de cada uma
 			 * das 5 Pecas/Navios, o TelaTabuleiro conta quantos botoes foram
 			 * selecionados e a TelaMenuImagens precisa retirar/mudar a Imagem
 			 * do Menu, a Thread verifica o numero de Rodadas e controla as
@@ -75,7 +75,8 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			cont.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
 			cont.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
 			cont.add(telaImagens.getPanelImagens(), BorderLayout.CENTER);
-			cont.add(telaChat.getPanelChat(), BorderLayout.PAGE_END);
+			cont.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
+			
 			
 		} catch (Exception exception) {
 			System.out.println(exception);
@@ -96,6 +97,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 		test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		test.setBackground(new Color(0, 100, 50));
 		test.setSize(1000, 500);
+		//stest.pack();
 		test.setVisible(true);
 	}
 }

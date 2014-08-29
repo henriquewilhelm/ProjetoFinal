@@ -9,9 +9,15 @@ import javax.swing.*;
 import Jogo.Jogador;
 
 /**
- * Batalha Naval (Ultimate Battle) v1.0 - Versao 2.0 de Interface Grafica (telaMenuImagens)
+ * Batalha Naval (Ultimate Battle) v1.0 - Versao 2.1 de Interface Grafica 
+ * (telaMenuImagens)
  * Esta classe eh responsavel pela Tela do Menu de Imagens. Ela  possui 5 Label`s
- * com Imagens (5 imagens com Peças/Navios e 1 com Mensagem de OK).
+ * com Imagens (5 imagens com Pecas/Navios e 1 com Mensagem de OK).
+ * 
+ * Obs: Ainda vou adicionar o nome dos navios e uma descricao perto da imagem de
+ * cada um, mas essa eh basicamente a tela da primeira etapa (Escolha das Posicoes).
+ * Falta criar a tela da segunda etapa (quando o jogo comeca), onde vamos ter os niveis
+ * de vida do jogador e de cada navio do Jogador assim como os pontos/acertos no inimigo...
  * Autor: Henrique W.
  */
 
@@ -48,30 +54,11 @@ public class TelaImagens implements ActionListener {
 		this.auxiliar.addActionListener(this);
 		//this.auxiliar.setVisible(false);
 	}
-
+	// Manipulador de Acoes (Por enquanto vazio)
 	public void actionPerformed(ActionEvent event) {
-		try {
-			String action = event.getActionCommand();
-			if (action.equals("teste")) {
-						if (jogador.getNumRodadas()-1 <= 5) {
-								getLabel()[jogador.getNumRodadas()-1].setIcon(getIcons()[5]);
-						}
-						if 	(jogador.getNumRodadas() == 5){
-								for (int contLabel = 0; contLabel < 5; contLabel++) {
-										getLabel()[contLabel].setVisible(false);
-								}
-								// Desabilita TelaMenuImagens ao final das 5 rodadas
-								getPanelImagens().setEnabled(false);
-						}
-			}
-		} catch (Exception exception) {
-			JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
-			System.out.println(exception);
-			exception.printStackTrace();
-		}
+	
 	}
 
-	
 	public JButton getAuxiliar() {
 		return auxiliar;
 	}

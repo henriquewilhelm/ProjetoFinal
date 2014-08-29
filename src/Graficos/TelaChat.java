@@ -1,23 +1,23 @@
 package Graficos;
 
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintStream;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * Batalha Naval (Ultimate Battle) - Versao 2.0 de Interface Grafica (TelaChat) 
+ * Batalha Naval (Ultimate Battle) - Versao 2.1 de Interface Grafica 
+ * (TelaChat) 
  * Esta classe eh responsavel pela Tela do Chat (Bate-Papo). Ela
- * possui dois Campos de Texto (TextField) e um botão enviar (JButton)!  
+ * possui dois Campos de Texto (TextField e TextArea com ScrollPane)
+ * e um botao enviar (JButton)!  
  * Autor: Henrique W.
  */
 
@@ -26,6 +26,7 @@ public class TelaChat {
 	private JPanel panelChat; 
 	// Declara Componentes
 	private JTextArea textAreaConversas;
+	private JScrollPane scrollPane;
 	private JTextField textFieldChat;
 	private JButton buttonChat; // Enviar
 	
@@ -34,35 +35,41 @@ public class TelaChat {
 	public TelaChat(TelaConexao telaConexao){
 		this.telaConexao = telaConexao;
 		// Cria nova Tela (JPanel)
-		setPanelChat(new JPanel(new GridLayout(3, 1, 1, 1)));
-		setTextAreaConversas(new JTextArea(1,1));
-		setTextFieldChat(new JTextField("Comece o chat...", 250));
-		setButtonChat(new JButton("Enviar"));
-		// Habilita / Disabilita edicao
-		getTextFieldChat().setEditable(true);
-		getTextAreaConversas().setEditable(false);
-		getTextAreaConversas().setSize(50, 50);
-		// Adicionando Componentes na nova Tela (JPanel)
-		getPanelChat().add(getTextAreaConversas());
-		getPanelChat().add(getTextFieldChat());
-		getPanelChat().add(getButtonChat());
-		// Manipulador de Eventos (Click, Entrada do Mouse/Teclado, etc)
-		ButtonHandler handler = new ButtonHandler();
-		//getTextFieldChat().addActionListener(handler);
-		getButtonChat().addActionListener(handler);
+		setPanelChat(new JPanel(new GridBagLayout()));
+        ButtonHandler handler = new ButtonHandler();
+        
+        setTextFieldChat(new JTextField(20));
+        getTextFieldChat().addActionListener(handler);
+        
+        setTextAreaConversas(new JTextArea(5, 20));
+        getTextAreaConversas().setEditable(false);
+        scrollPane = new JScrollPane(textAreaConversas);
+        
+        setButtonChat(new JButton("Enviar"));
+        getButtonChat().addActionListener(handler);
+        
+        //Add Components to this panel.
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+ 
+        c.fill = GridBagConstraints.HORIZONTAL;
+        getPanelChat().add(scrollPane, c);
+ 
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        getPanelChat().add(textFieldChat, c);
+        getPanelChat().add(buttonChat);
 	}
 	private class ButtonHandler implements ActionListener {
 		// Manipulador de Acoes - Botoes (BottonsChat)
 		public void actionPerformed(ActionEvent e) {
-			try {
+			try {       
 				if (e.getSource() == getButtonChat()) {
 					System.out.println(getTextFieldChat().getText());
 					//Printa na saida
 					telaConexao.getSaida().println(getTextFieldChat().getText());
 				}
-				String cmd = e.getActionCommand();
-				if (cmd.equals("atualiza"))
-						setTextAreaConversas(getTextAreaConversas().getText() + "\n" + telaConexao.getCli().getComandoEntrada());
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
 				exception.printStackTrace();
@@ -78,6 +85,12 @@ public class TelaChat {
 	}
 	public void setTextAreaConversas(String texto) {
 		this.textAreaConversas.setText(texto);
+	}	
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+	public void setScrollPane(JScrollPane scrollPane) {
+		this.scrollPane = scrollPane;
 	}
 	public JTextField getTextFieldChat() {
 		return textFieldChat;

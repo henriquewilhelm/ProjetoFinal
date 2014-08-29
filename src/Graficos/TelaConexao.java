@@ -11,12 +11,13 @@ import javax.swing.*;
 import Socket.Cliente;
 
 /**
- * Batalha Naval (Ultimate Battle) v1.0 Versao 2.0 de Interface Grafica
- * (telaConexao) Essa classe eh responsavel pela Tela de Conexao, possui um
- * Textfiled: Servidor/Porta e Botoes: Conecta/Desconceta, etc... Ela importa o
- * pacote Socket ja desenvolvido (Servidor/Cliente) e realiza a conexao
- * ClientSocket com ServerSocket pela sua interface, nao possui relaçao com
- * nenhuma outra Tela pelo menos até aqui, apenas Conecta e Desconta... 
+ * Batalha Naval (Ultimate Battle) v1.0 Versao 2.1 de Interface Grafica
+ * (telaConexao)
+ * Essa classe eh responsavel pela Tela de Conexao, possui um Textfiled: 
+ * Servidor/Porta e Botoes: Conecta/Desconceta, etc... Ela importa o
+ * pacote Socket ja desenvolvido neste projeto (Servidor/Cliente) e realiza 
+ * a conexao ClientSocket com ServerSocket pela sua interface, possui uma
+ * relacao com todas as telas pois eh responsavel por toda comunicacao... 
  * Autor: Henrique W.
  */
 
@@ -39,10 +40,11 @@ public class TelaConexao {
 	private int porta;
 	private PrintStream saida;
 	private String comandoSaida = "";
+	private boolean status = false;
 	// Construtor da Tela
 	public TelaConexao() {
 		// Cria nova Tela (JPanel)
-		setPanelMenuConexao(new JPanel(new FlowLayout(4, 1, 1)));
+		setPanelMenuConexao(new JPanel(new GridLayout(1, 1)));
 		// Cria os Componentes - Campos (TextField) e botoes (JButton)
 		setServer(new JLabel("Servidor:"));
 		setTextFieldHost(new JTextField(30));
@@ -107,10 +109,12 @@ public class TelaConexao {
 					saida = cliente.conecta(); // PrintStream do socket
 					getConectaServer().setEnabled(false); // Desabilita botao
 					getCloseServer().setEnabled(true); // Habilita botao
+					setStatus(true);
 				} else if (event.getSource() == getCloseServer()) {
 					cliente.desconecta();
 					getConectaServer().setEnabled(true); // Habilita botao
 					getCloseServer().setEnabled(false); // Desabilita botao
+					setStatus(false);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -230,4 +234,12 @@ public class TelaConexao {
 		this.comandoSaida = comandoSaida;
 	}
 
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	
 }
