@@ -26,7 +26,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 	// Classes do projeto
 	private TelaConexao telaConexao;
 	private TelaTabuleiro telaTabuleiro;
-	private TelaImagens telaImagens;
+	private TelaConsole telaConsole;
 	private TelaChat telaChat;
 
 	public TelaClienteMain() {
@@ -36,18 +36,17 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			Jogador player = new Jogador("Capitao Jack");
 			// Cria conteiner, facilita a organizacao e adicao de nova Telas (JPanel)
 			cont = getContentPane();
-			//cont.setLayout(new Boarder);
-			
+		
 			// Cria Telas
 			telaConexao = new TelaConexao();
-			telaImagens = new TelaImagens(player);
+			telaConsole = new TelaConsole(player);
 			telaTabuleiro = new TelaTabuleiro(player);
 			telaChat = new TelaChat(telaConexao);
 			
 		
 			// Inicializa Thread responsavel por verificar Rodadas de cada Jogador
 			// e controla as Telas quando necessario.
-			new ThreadMonitoraTelas(telaConexao, telaTabuleiro, telaImagens, telaChat).start();
+			new ThreadMonitoraTelas(telaConexao, telaTabuleiro, telaConsole, telaChat).start();
 			/**
 			 * MAIOR DIFICULDADE ATE AQUI:
 			 * 
@@ -74,7 +73,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			cont.add(telaConexao.getPanelMenuConexao(), BorderLayout.PAGE_START);
 			cont.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
 			cont.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
-			cont.add(telaImagens.getPanelImagens(), BorderLayout.CENTER);
+			cont.add(telaConsole.getPanelConsole(), BorderLayout.CENTER);
 			cont.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
 			
 			

@@ -14,14 +14,14 @@ public class ThreadMonitoraTelas extends Thread {
 	
 	private TelaConexao telaConexao;
 	private TelaTabuleiro telaTabuleiro;
-	private TelaImagens telaImagens;
+	private TelaConsole telaConsole;
 	private TelaChat telaChat;
 
 	public ThreadMonitoraTelas(TelaConexao telaConexao, TelaTabuleiro telaTabuleiro, 
-			TelaImagens telaImagens, TelaChat telaChat) {
+			TelaConsole telaConsole, TelaChat telaChat) {
 		
 		this.telaTabuleiro = telaTabuleiro;
-		this.telaImagens = telaImagens;
+		this.telaConsole = telaConsole;
 		this.telaConexao = telaConexao;
 		this.telaChat = telaChat;
 	}
@@ -29,33 +29,25 @@ public class ThreadMonitoraTelas extends Thread {
 	public void run() {
 		String aux = "";
 		// Enquanto Numero de Jogadas for menor que 100 (Numero de posicao de um tabuleiro)
-		while (telaImagens.getJogador().getNumRodadas() < 100) {
+		while (telaConsole.getJogador().getNumRodadas() < 100) {
 					// Comente a parte de baixo para nao ver o numero de Rodadas (repetindo)
 					//System.out.println("ThreadMonitoraRodadas - " + telaMenuImagens.getJogador().getNumRodadas());
 					
 					// Troca Imagem (JLabel) mostrando que Peca/Navio foi escolhido
-					if (telaImagens.getJogador().getNumRodadas() == 1) {
-						telaImagens.getLabel()[0]
-										.setIcon(telaImagens.getIcons()[5]);
+					if (telaConsole.getJogador().getNumRodadas() == 1) {
+					
 					}
-					if (telaImagens.getJogador().getNumRodadas() == 2) {
-						telaImagens.getLabel()[1]
-										.setIcon(telaImagens.getIcons()[5]);
+					if (telaConsole.getJogador().getNumRodadas() == 2) {
+						
 					}
-					if (telaImagens.getJogador().getNumRodadas() == 3) {
-						telaImagens.getLabel()[2]
-									.setIcon(telaImagens.getIcons()[5]);
+					if (telaConsole.getJogador().getNumRodadas() == 3) {
+					
 					}
-					if (telaImagens.getJogador().getNumRodadas() == 4) {
-						telaImagens.getLabel()[3]
-									.setIcon(telaImagens.getIcons()[5]);
+					if (telaConsole.getJogador().getNumRodadas() == 4) {
+						
 					}
-					if 	(telaImagens.getJogador().getNumRodadas() == 5){
-						for (int contLabel = 0; contLabel < 5; contLabel++) {
-							telaImagens.getLabel()[contLabel].setVisible(false);
-						}
-						// Desabilita TelaMenuImagens ao final das 5 rodadas
-						telaImagens.getPanelImagens().setEnabled(false);
+					if 	(telaConsole.getJogador().getNumRodadas() == 5){
+						telaConsole.getPanelConsole().setVisible(false);
 					}		
 				// Atualiza tela do chat (se conexao ok)
 				if (telaConexao.isStatus()){
