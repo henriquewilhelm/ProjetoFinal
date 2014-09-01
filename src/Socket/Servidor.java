@@ -9,11 +9,11 @@ import java.util.*;
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.0
  * (Servidor)
- * Essa classe é responsavel por cria um serversocket, ela espera pela conexao de dois clientes,
+ * Essa classe ï¿½ responsavel por cria um serversocket, ela espera pela conexao de dois clientes,
  * uma thread fica responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
  * a classe enquanto ela espera por uma saida, que conta com ajuda de um ArrayList de PrintStream,
  * alem deste atributo ela possui uma porta.
- * Obs: A ideia é criar um banco de dados para cadastro e login dos jogadores, alem de gerar um 
+ * Obs: A ideia ï¿½ criar um banco de dados para cadastro e login dos jogadores, alem de gerar um 
  * log em arquivo... 
  */
 
@@ -42,10 +42,10 @@ public class Servidor {
 		   				if (numeroConexao<=2){
 		   						// Aceita um cliente
 		   					Socket cliente = servidor.accept();
-		   					System.out.println("Conexão numero: " + numeroConexao + " Endereço do Cliente: " +   
+		   					System.out.println("Conexï¿½o numero: " + numeroConexao + " Endereï¿½o do Cliente: " +   
 		   							cliente.getInetAddress().getHostAddress());
 		   					
-		   					// Lê msgs vinda do cliente e adiconando ao ArrayList de Saida Padrao do Server/Socket
+		   					// Lï¿½ msgs vinda do cliente e adiconando ao ArrayList de Saida Padrao do Server/Socket
 		   					saida = new PrintStream(cliente.getOutputStream());
 		   					this.clientes.add(saida);
 	       
@@ -59,7 +59,9 @@ public class Servidor {
 		   				if (numeroConexao>=3){
 		   					numeroConexao=0;
 		   				}
-		   				numeroConexao++;
+		   				else{
+		   					numeroConexao++;
+		   				}
 		   			}
 		   			
 		   	}catch (Exception e) {

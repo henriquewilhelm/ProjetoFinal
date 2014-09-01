@@ -11,7 +11,7 @@ import Arquivos.ConsultaDescNavio;
 import Jogo.Jogador;
 
 /**
- * Batalha Naval (Ultimate Battle) v1.0 - Versao 2.1 de Interface Grafica 
+ * Batalha Naval (Ultimate Battle) v1.0 - Versao 2.2 de Interface Grafica 
  * (telaMenuImagens)
  * Esta classe eh responsavel pela Tela do Menu de Imagens. Ela  possui 5 Label`s
  * com Imagens (5 imagens com Pecas/Navios e 1 com Mensagem de OK).
@@ -24,32 +24,40 @@ import Jogo.Jogador;
  */
 
 public class TelaConsole {
-	// Declara Tela (JPanel)
+	// Declara Tela Principal - panelConsole (JPanel)
 	private JPanel panelConsole;
+	// Declara Sub-tela Descricao (JPanel)
 	private JPanel panelDescricao;
+	// Declara Campo de texto com Barra de rolagem
 	private JTextArea textArea;
 	private JScrollPane scrollPane;
+	// Declara nossa classe (Importada do pacote Arquivos)
 	private ConsultaDescNavio consulta;
-    static String vertical = "Vertical";
-    static String horizontal = "Horizontal";
+	// Declara Radio Button (Caixa de Opcao)
+	private JRadioButton radioVertical;
+	private JRadioButton radioHorizontal;
+    // Declara Componente - Botoes Volta e Proximo
 	private JButton ButtonVoltar;
 	private JButton ButtonProximo;
-	private int contador = 0;
+	// Declara variavel auxiliar do vetor de Imagens
+	private int contadorImagens = 0;
 	// Declarando e adicionando as Imagens ao vetor de Icon (Diretorio img) 
-	private Icon icons[] = {
-			new ImageIcon(getClass().getResource("img/img1.jpg")),
-			new ImageIcon(getClass().getResource("img/img2.jpg")),
-			new ImageIcon(getClass().getResource("img/img3.jpg")),
-			new ImageIcon(getClass().getResource("img/img4.jpg")),
-			new ImageIcon(getClass().getResource("img/img5.jpg")),
-			new ImageIcon(getClass().getResource("img/img6.jpg")) };
-	// Adicionando vetor de Icon (Imagens) ao JLabel[]
-	private JLabel label = new JLabel(icons[0]);
+	private Icon imagem[] = {
+			new ImageIcon(getClass().getResource("img/couracado.jpg")),
+			new ImageIcon(getClass().getResource("img/cruzador.jpg")),
+			new ImageIcon(getClass().getResource("img/destroyer.jpg")),
+			new ImageIcon(getClass().getResource("img/portaavioes.jpg")),
+			new ImageIcon(getClass().getResource("img/submarino.jpg")), 
+			new ImageIcon(getClass().getResource("img/submarino.jpg")) };
+	// Adicionando Icon (Imagens) ao JLabel[]
+	private JLabel label = new JLabel(imagem[0]);
 	// Nossa classe (Classe importada de Jogo.Jogador)
-	private Jogador jogador;
+	private Jogador player;	
+	private TelaTabuleiro telaTabuleiro;
 	// Construtor da Tela
-	public TelaConsole(Jogador jogador) {
-		this.jogador = jogador;
+	public TelaConsole(TelaTabuleiro telaTabuleiro, Jogador player) {
+		this.telaTabuleiro = telaTabuleiro;
+		this.player = player;
 		// Cria Tela Principal (JPanel)
 		setPanelConsole(new JPanel());
 		// Adiciona imagem do Navio/Peca a tela
@@ -59,14 +67,13 @@ public class TelaConsole {
 		// Cria e instancia TextArea para Descricao dos Navios/Pecas
         setTextArea(new JTextArea(10, 55));
         getTextArea().setEditable(false);	// Desabilita edicao
-        
         // Todos (Pacote Arquivos)
-        this.consulta = new ConsultaDescNavio();
+        setConsulta(new ConsultaDescNavio());
 		// Consulta descricao
-        this.consulta.ConsultaNavioTextFiel(0, getTextArea());
+        getConsulta().ConsultaNavioTextFiel(0, getTextArea());
         
         // Cria Scrollpane (Barra de rolagem) no Campo de Texto
-        scrollPane = new JScrollPane(getTextArea());
+        setScrollPane( new JScrollPane(getTextArea()));
         // Coloca Barra de rolagem no lugar (Final do texto e na Horizontal)
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -76,13 +83,13 @@ public class TelaConsole {
         // Adiciona a tela Descricao na tela principal Console
         getPanelConsole().add(getPanelDescricao());
 		// Cria Radio Button (Opcao Vertical)
-		JRadioButton radioVertical = new JRadioButton(vertical);
-        radioVertical.setMnemonic(KeyEvent.VK_R);
-        radioVertical.setActionCommand(vertical);
+		setRadioVertical( new JRadioButton("Vertical"));
+		//getRadioVertical().setMnemonic(KeyEvent.VK_R);
+		getRadioVertical().setActionCommand("vertical");
 		// Cria Radio Button (Opcao Horizontal)
-        JRadioButton radioHorizontal = new JRadioButton(horizontal);
-        radioHorizontal.setMnemonic(KeyEvent.VK_P);
-        radioHorizontal.setActionCommand(horizontal);
+		setRadioHorizontal(new JRadioButton("Horizontal"));
+		//getRadioHorizontal().setMnemonic(KeyEvent.VK_P);
+		getRadioHorizontal().setActionCommand("horizontal");
         // Cria grupo de radio buttons.
         ButtonGroup group = new ButtonGroup();
         // Adiciona os radio buttons ao grupo
@@ -109,18 +116,36 @@ public class TelaConsole {
 		// Manipulador de Acoes - Botoes (BottonsChat)
 		public void actionPerformed(ActionEvent e) {
 			try {       
+				if (e.getActionCommand().equals("horizontal")){
+					telaTabuleiro.setPosicao("horizontal");
+				}
+				if (e.getActionCommand().equals("vertical")){
+					telaTabuleiro.setPosicao("vertical");
+				}
 				if (e.getSource() == getButtonVoltar()) {
-					
+						if (getContadorImagens() >= 1)
+							player.setNumRodadas(player.getNumRodadas()-1);
+						for (int i=0; i<player.getHerois().get(player.getNumRodadas()-1).getPosicao().length; i++){
+							int posicao =player.getHerois().get(player.getNumRodadas()-1).getPosicao()[i].getX();
+							telaTabuleiro.getButtonsTab1()[posicao].setEnabled(true);
+							telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 0);
+							telaTabuleiro.getButtonsTab1()[posicao].setFundo(0);
+						}
+						if (getContadorImagens() >= 1)
+							setContadorImagens(getContadorImagens()-1);
+						getLabel().setIcon(getImagem()[getContadorImagens()]);
 				}
 				if (e.getSource() == getButtonProximo()) {
 					// Muda Imagem do navio/peca
-					if (getContador() < getIcons().length){
-							setContador(getContador()+1);
-							getLabel().setIcon(getIcons()[getContador()]);
+					if (getContadorImagens() < getImagem().length){
+							setContadorImagens(getContadorImagens()+1);
+							getLabel().setIcon(getImagem()[getContadorImagens()]);
 							// Atualiza descricao do Navio
 							getTextArea().setText("");
-							getConsulta().ConsultaNavioTextFiel(getContador(), getTextArea());
+							getConsulta().ConsultaNavioTextFiel(getContadorImagens()-1, getTextArea());
 					}
+					// Incrementa numero de rodadas
+					getPlayer().setNumRodadas(player.getNumRodadas() + 1);
 				}
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
@@ -129,109 +154,88 @@ public class TelaConsole {
 		}
 		
 	}
-
 	public JPanel getPanelConsole() {
 		return panelConsole;
 	}
-
-	public void setPanelConsole(JPanel panelOpcoes) {
-		this.panelConsole = panelOpcoes;
+	public void setPanelConsole(JPanel panelConsole) {
+		this.panelConsole = panelConsole;
 	}
-
-	public Icon[] getIcons() {
-		return icons;
-	}
-
-	public void setIcons(Icon[] icons) {
-		this.icons = icons;
-	}
-
-	public JLabel getLabel() {
-		return label;
-	}
-
-	public void setLabel(JLabel label) {
-		this.label = label;
-	}
-
-	public Jogador getJogador() {
-		return jogador;
-	}
-
-	public void setJogador(Jogador jogador) {
-		this.jogador = jogador;
-	}
-
-	public JButton getButtonVoltar() {
-		return ButtonVoltar;
-	}
-
-	public void setButtonVoltar(JButton ButtonVoltar) {
-		this.ButtonVoltar = ButtonVoltar;
-	}
-
-	public JButton getButtonProximo() {
-		return ButtonProximo;
-	}
-
-	public void setButtonProximo(JButton ButtonProximo) {
-		this.ButtonProximo = ButtonProximo;
-	}
-
-	public int getContador() {
-		return contador;
-	}
-
-	public void setContador(int contador) {
-		this.contador = contador;
-	}
-
-	public static String getVertical() {
-		return vertical;
-	}
-
-	public static void setVertical(String vertical) {
-		TelaConsole.vertical = vertical;
-	}
-
-	public static String getHorizontal() {
-		return horizontal;
-	}
-
-	public static void setHorizontal(String horizontal) {
-		TelaConsole.horizontal = horizontal;
-	}
-
-	public JTextArea getTextArea() {
-		return textArea;
-	}
-
-	public void setTextArea(JTextArea textArea) {
-		this.textArea = textArea;
-	}
-
-	public JScrollPane getScrollPane() {
-		return scrollPane;
-	}
-
-	public void setScrollPane(JScrollPane scrollPane) {
-		this.scrollPane = scrollPane;
-	}
-
 	public JPanel getPanelDescricao() {
 		return panelDescricao;
 	}
-
 	public void setPanelDescricao(JPanel panelDescricao) {
 		this.panelDescricao = panelDescricao;
 	}
-
+	public JTextArea getTextArea() {
+		return textArea;
+	}
+	public void setTextArea(JTextArea textArea) {
+		this.textArea = textArea;
+	}
+	public JScrollPane getScrollPane() {
+		return scrollPane;
+	}
+	public void setScrollPane(JScrollPane scrollPane) {
+		this.scrollPane = scrollPane;
+	}
 	public ConsultaDescNavio getConsulta() {
 		return consulta;
 	}
-
 	public void setConsulta(ConsultaDescNavio consulta) {
 		this.consulta = consulta;
 	}
-	
+	public JRadioButton getRadioVertical() {
+		return radioVertical;
+	}
+	public void setRadioVertical(JRadioButton radioVertical) {
+		this.radioVertical = radioVertical;
+	}
+	public JRadioButton getRadioHorizontal() {
+		return radioHorizontal;
+	}
+	public void setRadioHorizontal(JRadioButton radioHorizontal) {
+		this.radioHorizontal = radioHorizontal;
+	}
+	public JButton getButtonVoltar() {
+		return ButtonVoltar;
+	}
+	public void setButtonVoltar(JButton buttonVoltar) {
+		ButtonVoltar = buttonVoltar;
+	}
+	public JButton getButtonProximo() {
+		return ButtonProximo;
+	}
+	public void setButtonProximo(JButton buttonProximo) {
+		ButtonProximo = buttonProximo;
+	}
+	public int getContadorImagens() {
+		return contadorImagens;
+	}
+	public void setContadorImagens(int contadorImagens) {
+		this.contadorImagens = contadorImagens;
+	}
+	public Icon[] getImagem() {
+		return imagem;
+	}
+	public void setImagem(Icon[] imagem) {
+		this.imagem = imagem;
+	}
+	public JLabel getLabel() {
+		return label;
+	}
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
+	public Jogador getPlayer() {
+		return player;
+	}
+	public void setPlayer(Jogador jogador) {
+		this.player = jogador;
+	}
+	public TelaTabuleiro getTelaTabuleiro() {
+		return telaTabuleiro;
+	}
+	public void setTelaTabuleiro(TelaTabuleiro telaTabuleiro) {
+		this.telaTabuleiro = telaTabuleiro;
+	}
 }

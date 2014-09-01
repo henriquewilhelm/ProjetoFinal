@@ -2,19 +2,17 @@ package Jogo;
 
 public class Posicao {
 	private int x;
-	private int y;
 	
-	public Posicao(int x, int y) {
+	public Posicao(int x) {
 		setX(x);
-		setY(y);
 	}
 	
 	public void moverCima(int movimento) {
-		setY(getY() + movimento); 
+		setX(getX()+movimento*10); 
 	}
 	
 	public void moverBaixo(int movimento) {
-		setY(getY() - movimento);
+		setX(getX()-movimento*10);
 	}
 	
 	public void moverDireita(int movimento) {
@@ -31,13 +29,5 @@ public class Posicao {
 
 	public void setX(int x) {
 		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 }

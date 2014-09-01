@@ -33,20 +33,20 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 		super("Batalha Naval 1.0");
 		try {
 			// Cria Jogador - Nossa classe (Importada de Jogo.Jogador)
-			Jogador player = new Jogador("Capitao Jack");
+			Jogador player = new Jogador("Capitao Jack", 10);
 			// Cria conteiner, facilita a organizacao e adicao de nova Telas (JPanel)
 			cont = getContentPane();
 		
 			// Cria Telas
 			telaConexao = new TelaConexao();
-			telaConsole = new TelaConsole(player);
 			telaTabuleiro = new TelaTabuleiro(player);
+			telaConsole = new TelaConsole(telaTabuleiro, player);
 			telaChat = new TelaChat(telaConexao);
 			
 		
 			// Inicializa Thread responsavel por verificar Rodadas de cada Jogador
 			// e controla as Telas quando necessario.
-			new ThreadMonitoraTelas(telaConexao, telaTabuleiro, telaConsole, telaChat).start();
+			new ThreadMonitoraTelas(player,telaConexao, telaTabuleiro, telaConsole, telaChat).start();
 			/**
 			 * MAIOR DIFICULDADE ATE AQUI:
 			 * 
@@ -76,7 +76,6 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			cont.add(telaConsole.getPanelConsole(), BorderLayout.CENTER);
 			cont.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
 			
-			
 		} catch (Exception exception) {
 			System.out.println(exception);
 			exception.printStackTrace();
@@ -94,8 +93,8 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 
 		TelaClienteMain test = new TelaClienteMain();
 		test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		test.setBackground(new Color(0, 100, 50));
-		test.setSize(1000, 500);
+		test.setBackground(new Color(0,0,0));
+		test.setSize(1000, 580);
 		//stest.pack();
 		test.setVisible(true);
 	}

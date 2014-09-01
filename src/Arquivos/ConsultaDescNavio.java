@@ -68,23 +68,23 @@ public class ConsultaDescNavio {
 
 		switch (i) {
 		case 0:
-			documento = "doc/barco.dat";
+			documento = "doc/couracado.dat";
 			break;
 		
 		case 1:
-			documento = "doc/costeiro.dat";
+			documento = "doc/cruzador.dat";
 			break;
 
 		case 2:
-			documento = "doc/submarino.dat";
+			documento = "doc/destroyer.dat";
 			break;
 			
 		case 3:
-			documento ="doc/destroyer.dat";
+			documento ="doc/portaavioes.dat";
 			break;
 			
 		case 4:
-			documento = "doc/cargueiro.dat";
+			documento = "doc/submarino.dat";
 			break;
 		}	
 		return documento;
