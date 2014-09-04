@@ -36,53 +36,37 @@ public class ThreadMonitoraTelas extends Thread {
 		// Enquanto Numero de Jogadas for menor que 100 (Numero de posicao de um tabuleiro)
 		while (player.getNumRodadas() < 100) {
 					// Comente a parte de baixo para nao ver o numero de Rodadas (repetindo)
-					//System.out.println("ThreadMonitoraRodadas - " + telaMenuImagens.getJogador().getNumRodadas());
+					//System.out.println("ThreadMonitoraRodadas - " + numRodadas);
 					numRodadas = player.getNumRodadas();
-					if (numRodadas == 2) {
-						for (int i=0; i<player.getHerois().get(1).getPosicao().length; i++){
-							int posicao= player.getHerois().get(0).getPosicao()[i].getX();
-							telaTabuleiro.getButtonsTab1()[posicao].setEnabled(false);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 1);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
-						}
-					}
-					if (numRodadas == 3) {		
-							for (int i=0; i<player.getHerois().get(1).getPosicao().length; i++){
-								int posicao =player.getHerois().get(1).getPosicao()[i].getX();
-								telaTabuleiro.getButtonsTab1()[posicao].setEnabled(false);
-								telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 2);
-								telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
+					if (numRodadas <= 5 && telaConsole.isEscolha()) {
+							for (int i=0; i<player.getHerois().get(numRodadas-1).getPosicao().length; i++){
+								int posicao= player.getHerois().get(numRodadas-1).getPosicao()[i].getX();
+								if (!telaConsole.isVolta()){
+										telaTabuleiro.getButtonsTab1()[posicao].setEnabled(false);
+										telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), numRodadas-1);
+										telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
+								}
+								else {
+										System.out.println("entrei");
+										telaTabuleiro.getButtonsTab1()[posicao].setEnabled(true);
+										telaTabuleiro.getButtonsTab1()[posicao].setFundo(); // fundo azul 
+										telaTabuleiro.getButtonsTab1()[posicao].setFundo(0);
+										telaConsole.setVolta(false);
+								}
 							}
+							// Incrementa numero de rodadas
+							player.setNumRodadas(player.getNumRodadas() + 1);
+							telaConsole.setEscolha(false);
 					}
-					if (numRodadas == 4) {		
-						for (int i=0; i<player.getHerois().get(2).getPosicao().length; i++){
-							int posicao = player.getHerois().get(2).getPosicao()[i].getX();
-							telaTabuleiro.getButtonsTab1()[posicao].setEnabled(false);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 3);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
-						}
-					}
-					if (numRodadas == 5) {		
-						for (int i=0; i<player.getHerois().get(3).getPosicao().length; i++){
-							int posicao = player.getHerois().get(3).getPosicao()[i].getX();
-							telaTabuleiro.getButtonsTab1()[posicao].setEnabled(false);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 4);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
-						}
-					}
+					
 					if (numRodadas == 6) {		
-						for (int i=0; i<player.getHerois().get(4).getPosicao().length; i++){
-							int posicao = player.getHerois().get(4).getPosicao()[i].getX();
-							telaTabuleiro.getButtonsTab1()[posicao].setEnabled(false);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 5);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
-						}	
-						telaConsole.getPanelConsole().setVisible(false);
 						telaTabuleiro.getTabuleiro2().setVisible(true);
-					}		
+						telaConsole.getPanelConsole().setVisible(false);
+						// Incrementa numero de rodadas
+					}	
 				// Atualiza tela do chat (se conexao ok)
 				if (telaConexao.isStatus()){
-					String comandoEntrada = telaConexao.getCli().getComandoEntrada();
+					String comandoEntrada = telaConexao.getCliente().getComandoEntrada();
 					// Verifica se mensagem nao é igual a ultima...
 					if (!comandoEntrada.equals(aux)){
 						telaChat.setTextAreaConversas(comandoEntrada + "\n"+ telaChat.getTextAreaConversas().getText());

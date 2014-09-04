@@ -57,7 +57,7 @@ public class Servidor {
 		   					broadCast("PRONTO");
 		   				}
 		   				if (numeroConexao>=3){
-		   					numeroConexao=0;
+		   					numeroConexao=1;
 		   				}
 		   				else{
 		   					numeroConexao++;
@@ -95,7 +95,7 @@ public class Servidor {
 	   }
 	   public static void main(String[] args) throws  UnknownHostException, IOException {
 			// inicia o servidor
-			new Servidor(11111).conecta();
+			new Servidor(44444).conecta();
 	   }
 }
 	

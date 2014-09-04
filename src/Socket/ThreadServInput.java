@@ -5,7 +5,7 @@ import java.io.InputStream;
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.0
  * (Thread Server Input)
- * Essa classe (thread) é responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
+ * Essa classe (thread) ï¿½ responsavel pelo recebimento dos dados de cada cliente para nao ocupar a 
  * a classe "Pai".
  */
 
@@ -36,7 +36,7 @@ public class ThreadServInput implements Runnable {
 		   		try{
 		   			while (s.hasNextLine()) {
 		 
-		   				// Protocolo de Comunicação
+		   				// Protocolo de Comunicaï¿½ï¿½o
 		   				/** A primeira letra da String sera o identificador
 		   				 * # - Escolha de Pecas/Posicoes (Enquanto < numero De Navio)
 		   				 * @ - Ataque ao oponente
@@ -49,47 +49,47 @@ public class ThreadServInput implements Runnable {
    							
    								protocolo = msg.toString().toCharArray();
    								// Marcando as escolhas seu Mapa .
-   								if (protocolo[0] == '#' && numeroEscolhas < numeroNavio) {
+   								if (protocolo[0] == '#') {
    									if (this.numeroConexao == 1){
-   										// Marca local da peça/navio no tabuleiro/mapa do player
-   										// protocolo[1]; é o valor da posicao
+   										// Marca local da peï¿½a/navio no tabuleiro/mapa do player
+   										// protocolo[1]; ï¿½ o valor da posicao
    										System.out.println("Servidor Anota Escolha de posicao " + msg + " para cliente 1");
    									}	
    									if (this.numeroConexao == 2){		
-   										// Marca local da peça/navio no tabuleiro/mapa do player
-   										// protocolo[1]; é o valor da posicao
+   										// Marca local da peï¿½a/navio no tabuleiro/mapa do player
+   										// protocolo[1]; ï¿½ o valor da posicao
    										System.out.println("Servidor Anota Escolha de posicao " + msg + " para cliente 2");
    									}	
    									numeroEscolhas++;
    								}
    								//telnet localhost 33333	
    								// Ataca adversario (Mapa adversario).
-   								else if (protocolo[0] == '@' && numeroEscolhas >= numeroNavio) {
+   								if (protocolo[0] == '@') {
 									if (this.numeroConexao == 1){
-										// Marca local da peça/navio no tabuleiro/mapa do player 1
-										// protocolo[1]; é o valor da posicao
+										// Marca local da peï¿½a/navio no tabuleiro/mapa do player 1
+										// protocolo[1]; ï¿½ o valor da posicao
 										servidor.uniCast(1,msg);
 										System.out.println("Ataque do cliente 1 na Posicao: " + msg + " do Mapa do cliente 2");
 									}	 
 									if (this.numeroConexao == 2){		
-										// Marca local da peça/navio no tabuleiro/mapa do player 2
-										// protocolo[1]; é o valor da posicao
+										// Marca local da peï¿½a/navio no tabuleiro/mapa do player 2
+										// protocolo[1]; ï¿½ o valor da posicao
 										servidor.uniCast(0,msg);
 										System.out.println("Ataque do cliente 2 na Posicao: " + msg + " do Mapa do cliente 1");
 									}	
 									
    								}
    								// Feedback (Informa quando destroi um navio)
-   								else if (protocolo[0] == '$') {
+   								if (protocolo[0] == '$') {
    									if (this.numeroConexao == 1){
    										// Informa jogador e  do player 1
-   										// protocolo[1]; é o valor da posicao
+   										// protocolo[1]; ï¿½ o valor da posicao
    										servidor.uniCast(1,msg);
    										System.out.println("Informacao do cliente 1: " + msg);
    									}	
    									if (this.numeroConexao == 2){		
-   										// Marca local da peça/navio no tabuleiro/mapa do player 2
-   										// protocolo[1]; é o valor da posicao
+   										// Marca local da peï¿½a/navio no tabuleiro/mapa do player 2
+   										// protocolo[1]; ï¿½ o valor da posicao
    										servidor.uniCast(0,msg);
    										System.out.println("Informacao do cliente 2: " + msg);
    									}	

@@ -42,7 +42,8 @@ public class TelaConexao {
 	private String comandoSaida = "";
 	private boolean status = false;
 	// Construtor da Tela
-	public TelaConexao() {
+	public TelaConexao(Cliente cliente) {
+		setCliente(cliente);
 		// Cria nova Tela (JPanel)
 		setPanelMenuConexao(new JPanel(new GridLayout(1, 1)));
 		// Cria os Componentes - Campos (TextField) e botoes (JButton)
@@ -86,27 +87,32 @@ public class TelaConexao {
 
 		public void actionPerformed(ActionEvent event) {
 			if (event.getSource() == getOpUm()) {
-				setComandoSaida("#");
+				setComandoSaida("#teste");
+				System.out.println("entrou");
 			} else if (event.getSource() == getOpDois()) {
-				setComandoSaida("@");
+				setComandoSaida("@teste");
+				System.out.println("entrou");
 			} else if (event.getSource() == getOpTres()) {
-				setComandoSaida("$");
+				setComandoSaida("$teste");
+				System.out.println("entrou");
 			}
-			//saida.println(comandoSaida);
-			//System.out.println(comandoSaida);
+			saida.println(comandoSaida);
 		}
 	}
 
 	// Manipulador de Acoes - Botoes (Conecta, Desconecta)
 	private class ButtonConexaoHandler implements ActionListener {
+		
+
 		public void actionPerformed(ActionEvent event) {
 			try {
 				if (event.getSource() == getConectaServer()) {
 					host = getTextFieldHost().getText();
 					porta = Integer.parseInt(getTextFieldPorta().getText());
 					// Cliente (Import Socket)
-					cliente = new Cliente(host, porta);
-					saida = cliente.conecta(); // PrintStream do socket
+					getCliente().setPorta(porta);
+					getCliente().setHost(host);
+					getCliente().conecta(); // PrintStream do socket
 					getConectaServer().setEnabled(false); // Desabilita botao
 					getCloseServer().setEnabled(true); // Habilita botao
 					setStatus(true);
@@ -194,11 +200,11 @@ public class TelaConexao {
 		this.textFieldPorta = textFieldPorta;
 	}
 
-	public Cliente getCli() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCli(Cliente cli) {
+	public void setCliente(Cliente cli) {
 		this.cliente = cli;
 	}
 

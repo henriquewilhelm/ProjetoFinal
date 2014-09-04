@@ -12,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import Socket.Cliente;
+
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.1 de Interface Grafica 
  * (TelaChat) 
@@ -30,10 +32,10 @@ public class TelaChat {
 	private JTextField textFieldChat;
 	private JButton buttonChat; // Enviar
 	
-	private TelaConexao telaConexao;
+	private Cliente cliente;
 	// Construtor da Tela
-	public TelaChat(TelaConexao telaConexao){
-		this.telaConexao = telaConexao;
+	public TelaChat(Cliente cliente){
+		this.cliente = cliente;
 		// Cria nova Tela (JPanel)
 		setPanelChat(new JPanel(new GridBagLayout()));
         ButtonHandler handler = new ButtonHandler();
@@ -68,7 +70,7 @@ public class TelaChat {
 				if (e.getSource() == getButtonChat()) {
 					System.out.println(getTextFieldChat().getText());
 					//Printa na saida
-					telaConexao.getSaida().println(getTextFieldChat().getText());
+					cliente.getSaida().println(getTextFieldChat().getText());
 				}
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
