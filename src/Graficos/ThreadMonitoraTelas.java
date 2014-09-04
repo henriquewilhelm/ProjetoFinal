@@ -46,19 +46,21 @@ public class ThreadMonitoraTelas extends Thread {
 										telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), numRodadas-1);
 										telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
 								}
-								else {
-										System.out.println("entrei");
-										telaTabuleiro.getButtonsTab1()[posicao].setEnabled(true);
-										telaTabuleiro.getButtonsTab1()[posicao].setFundo(); // fundo azul 
-										telaTabuleiro.getButtonsTab1()[posicao].setFundo(0);
-										telaConsole.setVolta(false);
-								}
 							}
 							// Incrementa numero de rodadas
 							player.setNumRodadas(player.getNumRodadas() + 1);
 							telaConsole.setEscolha(false);
 					}
-					
+					// Volta escolha
+					if (numRodadas <= 5 && telaConsole.isVolta()){
+						for (int i=0; i<player.getHerois().get(numRodadas-1).getPosicao().length; i++){
+							int posicao= player.getHerois().get(numRodadas-1).getPosicao()[i].getX();
+									telaTabuleiro.getButtonsTab1()[posicao].setEnabled(true);
+									telaTabuleiro.getButtonsTab1()[posicao].setFundo(); // fundo azul 
+									telaTabuleiro.getButtonsTab1()[posicao].setFundo(0);
+									telaConsole.setVolta(false);
+						}
+					}
 					if (numRodadas == 6) {		
 						telaTabuleiro.getTabuleiro2().setVisible(true);
 						telaConsole.getPanelConsole().setVisible(false);
