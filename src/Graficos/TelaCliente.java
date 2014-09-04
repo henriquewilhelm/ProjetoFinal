@@ -24,7 +24,7 @@ import Socket.Cliente;
  * Autor: Henrique W.
  */
 
-public class TelaClienteMain extends JFrame implements ActionListener {
+public class TelaCliente extends JFrame implements ActionListener {
 	
 	private Container cont;
 	// Classes do projeto
@@ -34,7 +34,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 	private TelaChat telaChat;
 	private Cliente cliente;
 
-	public TelaClienteMain() {
+	public TelaCliente() {
 		super("Batalha Naval 1.0");
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setSize(1000, 580);
@@ -50,7 +50,7 @@ public class TelaClienteMain extends JFrame implements ActionListener {
 			// Cria Telas
 			telaConexao = new TelaConexao(cliente);
 			telaTabuleiro = new TelaTabuleiro(cliente, player);
-			telaConsole = new TelaConsole(telaTabuleiro, player);
+			telaConsole = new TelaConsole(player);
 			telaChat = new TelaChat(cliente);
 			
 			ExecutorService service = Executors.newFixedThreadPool(1);

@@ -5,8 +5,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import Jogo.Jogador;
-import Jogo.Posicao;
+import Jogo.*;
+
+import Socket.Cliente;
 
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.2 de Interface Grafica 
@@ -32,9 +33,11 @@ public class TelaTabuleiro implements ActionListener {
 	private String posicao = "vertical";
 	// Declara a nossa classe Jogador (Importada de Jogo.Jogador)
 	private Jogador jogador;
+	private Cliente cliente;
 	// Contrutor da Tela
-	public TelaTabuleiro(Jogador jogador) { // Nossa classe (Importada de Jogo.Jogador)
+	public TelaTabuleiro(Cliente cliente, Jogador jogador) { // Nossa classe (Importada de Jogo.Jogador)
 		this.jogador = jogador;
+		this.cliente = cliente;
 		// Cria novas Telas (JPanel`s)
 		setTabuleiro1(new JPanel(new GridLayout(10, 1, 0, 0)));
 		setTabuleiro2(new JPanel(new GridLayout(10, 1, 0, 0)));
@@ -59,6 +62,7 @@ public class TelaTabuleiro implements ActionListener {
 	// Manipulador de Acoes - Botoes (0-99)
 	public void actionPerformed(ActionEvent e) {
 		try {
+			int numRodadas;
 			for (int contador = 0; contador < 100; contador++) {
 				// PRIMEIRA ETAPA - Escolhendo a Posicao para cada Peca/Navio
 				// Escolhas (Navios/Posicao)
@@ -96,16 +100,18 @@ public class TelaTabuleiro implements ActionListener {
 					}
 				} 
 				else {
-					if (jogador.getNumRodadas() == 5) {
-					//
-					}
-					if (e.getSource() == getButtonsTab1()[contador]) {
-							JOptionPane.showMessageDialog(null,"O jogo ja comecou, escolha a Posicao "
+					if (jogador.getNumRodadas() >= 5) {
+						//
+						if (e.getSource() == getButtonsTab1()[contador]) {
+								JOptionPane.showMessageDialog(null,"O jogo ja comecou, escolha a Posicao "
 												+ "que deseja atacar no tabuleiro do Player 2");
-					}
-					if (e.getSource() == getButtonsTab2()[contador]) {
-							getButtonsTab2()[contador].setEnabled(false);
-							getButtonsTab2()[contador].setFundo(1);
+						}
+						if (e.getSource() == getButtonsTab2()[contador]) {
+								getButtonsTab2()[contador].setEnabled(false);
+								getButtonsTab2()[contador].setFundo(1);
+								jogador.setNumRodadas(jogador.getNumRodadas() + 1);
+								cliente.getSaida().println("#"+contador);
+						}
 					}
 				}
 			}

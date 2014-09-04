@@ -54,6 +54,9 @@ public class TelaConsole {
 	// Nossa classe (Classe importada de Jogo.Jogador)
 	private Jogador player;	
 	private TelaTabuleiro telaTabuleiro;
+	private boolean escolha = false;
+	private boolean volta = false;
+	
 	// Construtor da Tela
 	public TelaConsole(TelaTabuleiro telaTabuleiro, Jogador player) {
 		this.telaTabuleiro = telaTabuleiro;
@@ -125,12 +128,7 @@ public class TelaConsole {
 				if (e.getSource() == getButtonVoltar()) {
 						if (getContadorImagens() >= 1)
 							player.setNumRodadas(player.getNumRodadas()-1);
-						for (int i=0; i<player.getHerois().get(player.getNumRodadas()-1).getPosicao().length; i++){
-							int posicao =player.getHerois().get(player.getNumRodadas()-1).getPosicao()[i].getX();
-							telaTabuleiro.getButtonsTab1()[posicao].setEnabled(true);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(telaTabuleiro.getPosicao(), 0);
-							telaTabuleiro.getButtonsTab1()[posicao].setFundo(0);
-						}
+						setVolta(true);
 						if (getContadorImagens() >= 1)
 							setContadorImagens(getContadorImagens()-1);
 						getLabel().setIcon(getImagem()[getContadorImagens()]);
@@ -142,10 +140,10 @@ public class TelaConsole {
 							getLabel().setIcon(getImagem()[getContadorImagens()]);
 							// Atualiza descricao do Navio
 							getTextArea().setText("");
-							getConsulta().ConsultaNavioTextFiel(getContadorImagens()-1, getTextArea());
+							getConsulta().ConsultaNavioTextFiel(getContadorImagens()-1, getTextArea());		
 					}
-					// Incrementa numero de rodadas
-					getPlayer().setNumRodadas(player.getNumRodadas() + 1);
+					setEscolha(true);
+					
 				}
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
@@ -238,4 +236,17 @@ public class TelaConsole {
 	public void setTelaTabuleiro(TelaTabuleiro telaTabuleiro) {
 		this.telaTabuleiro = telaTabuleiro;
 	}
+	public boolean isEscolha() {
+		return escolha;
+	}
+	public void setEscolha(boolean escolha) {
+		this.escolha = escolha;
+	}
+	public boolean isVolta() {
+		return volta;
+	}
+	public void setVolta(boolean volta) {
+		this.volta = volta;
+	}
+	
 }
