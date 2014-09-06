@@ -22,6 +22,8 @@ import javax.swing.*;
  */
 
 public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas de JButton  
+
+	private static final long serialVersionUID = 1L;
 	private int i=0;
     private JLabel label ;  
     private ArrayList<ImageIcon> imagem;
@@ -136,33 +138,33 @@ public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas 
 		  this.i =0;
    }
 	
-   public void setFundo(String posicao, int tipo){
+   public void setFundo(boolean posicao, int tipo){
 	   if (tipo == 0){
-		   if (posicao.equals("vertical"))
+		   if (!posicao)
 			   this.imagem = this.imagemVertical1;
 		   else
 			   this.imagem = this.imagemHorizontal1;
 	   }
 	   if (tipo == 1){
-		   if (posicao.equals("vertical"))
+		   if (!posicao)
 			   this.imagem = this.imagemVertical2;
 		   else
 			   this.imagem = this.imagemHorizontal2;
 	   }
 	   if (tipo == 2){
-		   if (posicao.equals("vertical"))
+		   if (!posicao)
 			   this.imagem = this.imagemVertical3;
 		   else
 			   this.imagem = this.imagemHorizontal3;
 	   }
 	   if (tipo == 3){
-		   if (posicao.equals("vertical"))
+		   if (!posicao)
 			   this.imagem = this.imagemVertical4;
 		   else
 			   this.imagem = this.imagemHorizontal4;
 	   }
 	   if (tipo == 4){
-		   if (posicao.equals("vertical"))
+		   if (!posicao)
 			   this.imagem = this.imagemVertical5;
 		   else
 			   this.imagem = this.imagemHorizontal5;

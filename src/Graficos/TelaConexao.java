@@ -23,16 +23,18 @@ import Socket.Cliente;
 
 public class TelaConexao {
 	// Declara Tela (JPanel)
-	private JPanel panelMenuConexao;
+	private JPanel panelConexao;
 	// Componentes do Menu de Conexao com Servidor
-	private JLabel server;
+	private JLabel serverLabel;
+	private JLabel portaLabel;
+	private JLabel loginLabel;
+	private JLabel senhaLabel;
 	private JButton conectaServer;
 	private JButton closeServer;
-	private JButton opUm;
-	private JButton opDois;
-	private JButton opTres;
 	private JTextField textFieldHost;
 	private JTextField textFieldPorta;
+	private JTextField textFieldLogin;
+	private JTextField textFieldSenha;
 	// Nossa classe (Importada de Socket)
 	private Cliente cliente;
 	// Variaveis auxiliares
@@ -41,37 +43,42 @@ public class TelaConexao {
 	private PrintStream saida;
 	private String comandoSaida = "";
 	private boolean status = false;
+	private JPanel cont;
+	private JPanel cards;
 	// Construtor da Tela
-	public TelaConexao(Cliente cliente) {
+	public TelaConexao(JPanel cont, Cliente cliente, JPanel cards) {
+		this.cont = cont;
+		this.cards = cards;
 		setCliente(cliente);
 		// Cria nova Tela (JPanel)
-		setPanelMenuConexao(new JPanel(new GridLayout(1, 1)));
+		setPanelConexao(new JPanel(new GridLayout(5, 2)));
 		// Cria os Componentes - Campos (TextField) e botoes (JButton)
-		setServer(new JLabel("Servidor:"));
+		setServerLabel(new JLabel("Servidor"));
 		setTextFieldHost(new JTextField(30));
 		getTextFieldHost().setText("localhost");
+		setPortaLabel(new JLabel("Porta"));
 		setTextFieldPorta(new JTextField(5));
+		getTextFieldPorta().setText("22222");
+		setLoginLabel(new JLabel("Login"));
+		setTextFieldLogin(new JTextField());
+		setSenhaLabel(new JLabel("Senha"));
+		setTextFieldSenha(new JTextField());
+		
 		setConectaServer(new JButton("Conecta no servidor"));
 		setCloseServer(new JButton("Desconecta"));
-		setOpUm(new JButton("Op Um"));
-		setOpDois(new JButton("Op Dois"));
-		setOpTres(new JButton("Op Tres"));
 
 		// Adiciona objetos na Tela (JPanel)
-		getPanelMenuConexao().add(getServer());
-		getPanelMenuConexao().add(getTextFieldHost());
-		getPanelMenuConexao().add(getTextFieldPorta());
-		getPanelMenuConexao().add(getConectaServer());
-		getPanelMenuConexao().add(getCloseServer());
-		getPanelMenuConexao().add(getOpUm());
-		getPanelMenuConexao().add(getOpDois());
-		getPanelMenuConexao().add(getOpTres());
-
-		// Cria handler (Manipulador de Botoes - Acoes)
-		ButtonHandler handler = new ButtonHandler();
-		getOpUm().addActionListener(handler);
-		getOpDois().addActionListener(handler);
-		getOpTres().addActionListener(handler);
+		getPanelConexao().add(getServerLabel());
+		getPanelConexao().add(getTextFieldHost());
+		getPanelConexao().add(getPortaLabel());
+		getPanelConexao().add(getTextFieldPorta());
+		getPanelConexao().add(getLoginLabel());
+		getPanelConexao().add(getTextFieldLogin());
+		getPanelConexao().add(getSenhaLabel());
+		getPanelConexao().add(getTextFieldSenha());
+			
+		getPanelConexao().add(getConectaServer());
+		getPanelConexao().add(getCloseServer());
 
 		// Cria handlerCon (Manipulador de Botoes - Acoes)
 		ButtonConexaoHandler handlerCon = new ButtonConexaoHandler();
@@ -80,24 +87,6 @@ public class TelaConexao {
 
 		// Desabilita botao
 		getCloseServer().setEnabled(false);
-	}
-
-	// Manipulador de Acoes - Botoes (1, 2, 3)
-	private class ButtonHandler implements ActionListener {
-
-		public void actionPerformed(ActionEvent event) {
-			if (event.getSource() == getOpUm()) {
-				setComandoSaida("#teste");
-				System.out.println("entrou");
-			} else if (event.getSource() == getOpDois()) {
-				setComandoSaida("@teste");
-				System.out.println("entrou");
-			} else if (event.getSource() == getOpTres()) {
-				setComandoSaida("$teste");
-				System.out.println("entrou");
-			}
-			saida.println(comandoSaida);
-		}
 	}
 
 	// Manipulador de Acoes - Botoes (Conecta, Desconecta)
@@ -112,10 +101,13 @@ public class TelaConexao {
 					// Cliente (Import Socket)
 					getCliente().setPorta(porta);
 					getCliente().setHost(host);
-					getCliente().conecta(); // PrintStream do socket
+					setStatus(getCliente().conecta()); // PrintStream do socket
 					getConectaServer().setEnabled(false); // Desabilita botao
 					getCloseServer().setEnabled(true); // Habilita botao
-					setStatus(true);
+					
+					CardLayout cl = (CardLayout)(cards.getLayout());
+			        cl.show(cards, "2");
+					
 				} else if (event.getSource() == getCloseServer()) {
 					cliente.desconecta();
 					getConectaServer().setEnabled(true); // Habilita botao
@@ -128,20 +120,28 @@ public class TelaConexao {
 		}
 	}
 	// Getters and Setters
-	public JPanel getPanelMenuConexao() {
-		return panelMenuConexao;
+	public JPanel getPanelConexao() {
+		return panelConexao;
 	}
 
-	public void setPanelMenuConexao(JPanel panelMenuConexao) {
-		this.panelMenuConexao = panelMenuConexao;
+	public void setPanelConexao(JPanel panelConexao) {
+		this.panelConexao = panelConexao;
 	}
 
-	public JLabel getServer() {
-		return server;
+	public JLabel getPortaLabel() {
+		return portaLabel;
 	}
 
-	public void setServer(JLabel server) {
-		this.server = server;
+	public void setPortaLabel(JLabel portaLabel) {
+		this.portaLabel = portaLabel;
+	}
+
+	public JLabel getServerLabel() {
+		return serverLabel;
+	}
+
+	public void setServerLabel(JLabel server) {
+		this.serverLabel = server;
 	}
 
 	public JButton getConectaServer() {
@@ -158,30 +158,6 @@ public class TelaConexao {
 
 	public void setCloseServer(JButton closeServer) {
 		this.closeServer = closeServer;
-	}
-
-	public JButton getOpUm() {
-		return opUm;
-	}
-
-	public void setOpUm(JButton opUm) {
-		this.opUm = opUm;
-	}
-
-	public JButton getOpDois() {
-		return opDois;
-	}
-
-	public void setOpDois(JButton opDois) {
-		this.opDois = opDois;
-	}
-
-	public JButton getOpTres() {
-		return opTres;
-	}
-
-	public void setOpTres(JButton opTres) {
-		this.opTres = opTres;
 	}
 
 	public JTextField getTextFieldHost() {
@@ -247,5 +223,54 @@ public class TelaConexao {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+
+	public JLabel getLoginLabel() {
+		return loginLabel;
+	}
+
+	public void setLoginLabel(JLabel loginLabel) {
+		this.loginLabel = loginLabel;
+	}
+
+	public JLabel getSenhaLabel() {
+		return senhaLabel;
+	}
+
+	public void setSenhaLabel(JLabel senhaLabel) {
+		this.senhaLabel = senhaLabel;
+	}
+
+	public JTextField getTextFieldLogin() {
+		return textFieldLogin;
+	}
+
+	public void setTextFieldLogin(JTextField textFieldLogin) {
+		this.textFieldLogin = textFieldLogin;
+	}
+
+	public JTextField getTextFieldSenha() {
+		return textFieldSenha;
+	}
+
+	public void setTextFieldSenha(JTextField textFieldSenha) {
+		this.textFieldSenha = textFieldSenha;
+	}
+
+	public JPanel getCont() {
+		return cont;
+	}
+
+	public void setCont(JPanel cont) {
+		this.cont = cont;
+	}
+
+	public JPanel getCards() {
+		return cards;
+	}
+
+	public void setCards(JPanel cards) {
+		this.cards = cards;
+	}
+	
 	
 }

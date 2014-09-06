@@ -95,7 +95,7 @@ public class Servidor {
 	   }
 	   public static void main(String[] args) throws  UnknownHostException, IOException {
 			// inicia o servidor
-			new Servidor(44444).conecta();
+			new Servidor(22222).conecta();
 	   }
 }
 	

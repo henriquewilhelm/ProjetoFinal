@@ -3,7 +3,6 @@ package Graficos;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
@@ -24,6 +23,7 @@ import Jogo.Jogador;
  */
 
 public class TelaConsole {
+	
 	// Declara Tela Principal - panelConsole (JPanel)
 	private JPanel panelConsole;
 	// Declara Sub-tela Descricao (JPanel)
@@ -40,26 +40,23 @@ public class TelaConsole {
 	private JButton ButtonVoltar;
 	private JButton ButtonProximo;
 	// Declara variavel auxiliar do vetor de Imagens
-	private int contadorImagens = 0;
 	// Declarando e adicionando as Imagens ao vetor de Icon (Diretorio img) 
 	private Icon imagem[] = {
 			new ImageIcon(getClass().getResource("img/couracado.jpg")),
 			new ImageIcon(getClass().getResource("img/cruzador.jpg")),
 			new ImageIcon(getClass().getResource("img/destroyer.jpg")),
 			new ImageIcon(getClass().getResource("img/portaavioes.jpg")),
-			new ImageIcon(getClass().getResource("img/submarino.jpg")), 
 			new ImageIcon(getClass().getResource("img/submarino.jpg")) };
 	// Adicionando Icon (Imagens) ao JLabel[]
 	private JLabel label = new JLabel(imagem[0]);
 	// Nossa classe (Classe importada de Jogo.Jogador)
 	private Jogador player;	
-	private TelaTabuleiro telaTabuleiro;
 	private boolean escolha = false;
 	private boolean volta = false;
+	private boolean posicao = false;
 	
 	// Construtor da Tela
-	public TelaConsole(TelaTabuleiro telaTabuleiro, Jogador player) {
-		this.telaTabuleiro = telaTabuleiro;
+	public TelaConsole(Jogador player) {
 		this.player = player;
 		// Cria Tela Principal (JPanel)
 		setPanelConsole(new JPanel());
@@ -105,7 +102,7 @@ public class TelaConsole {
         getPanelConsole().add(radioHorizontal);
         // Criando Botoes Volta e Proxima
 		setButtonVoltar( (new JButton("Voltar Escolha")) );
-		setButtonProximo( (new JButton("Proxima Escolha")) );
+		setButtonProximo( (new JButton("Confirmar Escolha")) );
 		// Adicionando os botes a tela principal
 		getPanelConsole().add(getButtonVoltar());
 		getPanelConsole().add(getButtonProximo());
@@ -120,33 +117,27 @@ public class TelaConsole {
 		public void actionPerformed(ActionEvent e) {
 			try {       
 				if (e.getActionCommand().equals("horizontal")){
-					telaTabuleiro.setPosicao("horizontal");
+					setPosicao(true);
 				}
 				if (e.getActionCommand().equals("vertical")){
-					telaTabuleiro.setPosicao("vertical");
+					setPosicao(false);
 				}
 				if (e.getSource() == getButtonVoltar()) {
-						if (getContadorImagens() >= 1)
+						if (player.getNumRodadas() > 1 ){
 							player.setNumRodadas(player.getNumRodadas()-1);
-						setVolta(true);
-						if (getContadorImagens() >= 1)
-							setContadorImagens(getContadorImagens()-1);
-						getLabel().setIcon(getImagem()[getContadorImagens()]);
+							setVolta(true);
+							getLabel().setIcon(getImagem()[player.getNumRodadas()-1]);
+							getTextArea().setText("");
+							getConsulta().ConsultaNavioTextFiel(player.getNumRodadas()-1, getTextArea());	
+						}
 				}
 				if (e.getSource() == getButtonProximo()) {
 					// Muda Imagem do navio/peca
-					if (getContadorImagens() < getImagem().length){
-							setContadorImagens(getContadorImagens()+1);
-							getLabel().setIcon(getImagem()[getContadorImagens()]);
-							// Atualiza descricao do Navio
-							getTextArea().setText("");
-							getConsulta().ConsultaNavioTextFiel(getContadorImagens()-1, getTextArea());		
-					}
 					setEscolha(true);
-					
+					System.out.println("Monitora Rodadas - " + player.getNumRodadas());
 				}
 			} catch (Exception exception) {
-				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
+				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto do Console");
 				exception.printStackTrace();
 			}
 		}
@@ -206,12 +197,6 @@ public class TelaConsole {
 	public void setButtonProximo(JButton buttonProximo) {
 		ButtonProximo = buttonProximo;
 	}
-	public int getContadorImagens() {
-		return contadorImagens;
-	}
-	public void setContadorImagens(int contadorImagens) {
-		this.contadorImagens = contadorImagens;
-	}
 	public Icon[] getImagem() {
 		return imagem;
 	}
@@ -230,12 +215,6 @@ public class TelaConsole {
 	public void setPlayer(Jogador jogador) {
 		this.player = jogador;
 	}
-	public TelaTabuleiro getTelaTabuleiro() {
-		return telaTabuleiro;
-	}
-	public void setTelaTabuleiro(TelaTabuleiro telaTabuleiro) {
-		this.telaTabuleiro = telaTabuleiro;
-	}
 	public boolean isEscolha() {
 		return escolha;
 	}
@@ -247,6 +226,12 @@ public class TelaConsole {
 	}
 	public void setVolta(boolean volta) {
 		this.volta = volta;
+	}
+	public boolean isPosicao() {
+		return posicao;
+	}
+	public void setPosicao(boolean posicao) {
+		this.posicao = posicao;
 	}
 	
 }

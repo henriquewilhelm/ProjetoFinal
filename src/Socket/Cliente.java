@@ -28,7 +28,7 @@ public class Cliente {
 		 
 	   }
 	   // Metodo conecta na host e porta e retorna o PrintStream (Saida padrao do socket)
-	   public void conecta () throws UnknownHostException, IOException{
+	   public boolean conecta () throws UnknownHostException, IOException{
 			 			// Constroi e instancia Socket
 			 			cliente = new Socket(this.host, this.porta);
 		        		        		  
@@ -38,7 +38,8 @@ public class Cliente {
 		       		   
 		       		   	// l� msgs vinda do servidor
 		       		   	this.saida = new PrintStream(cliente.getOutputStream());
-		       		   	status = true;		// true == conectado	
+		       		   	status = true;// true == conectado
+		       		   	return status;
 		   }
 	   	// Metodo desconecta do socket
 		public void desconecta() throws IOException{

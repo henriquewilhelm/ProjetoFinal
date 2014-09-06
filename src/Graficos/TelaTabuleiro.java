@@ -30,10 +30,11 @@ public class TelaTabuleiro implements ActionListener {
 	private Botao buttonsTab1[] = new Botao[100]; // = new JButton[100]; // Botoes 0 - 99
 	private Botao buttonsTab2[] = new Botao[100]; // = new JButton[100]; // Botoes 0 - 99
 	// Declara variavel auxiliar
-	private String posicao = "vertical";
+	private boolean posicao = false;
 	// Declara a nossa classe Jogador (Importada de Jogo.Jogador)
 	private Jogador jogador;
 	private Cliente cliente;
+	private boolean escolha = false;
 	// Contrutor da Tela
 	public TelaTabuleiro(Cliente cliente, Jogador jogador) { // Nossa classe (Importada de Jogo.Jogador)
 		this.jogador = jogador;
@@ -62,13 +63,12 @@ public class TelaTabuleiro implements ActionListener {
 	// Manipulador de Acoes - Botoes (0-99)
 	public void actionPerformed(ActionEvent e) {
 		try {
-			int numRodadas;
 			for (int contador = 0; contador < 100; contador++) {
 				// PRIMEIRA ETAPA - Escolhendo a Posicao para cada Peca/Navio
 				// Escolhas (Navios/Posicao)
 				if (e.getSource() == getButtonsTab1()[contador]) {
 					int aux;
-					if (posicao.equals("horizontal"))
+					if (posicao)
 						 aux = 1;
 					else
 						 aux = 10;
@@ -76,47 +76,49 @@ public class TelaTabuleiro implements ActionListener {
 					if (jogador.getNumRodadas() == 1) {
 						jogador.getHerois().get(0).getPosicao()[0] = new Posicao(contador);
 						jogador.getHerois().get(0).getPosicao()[1] = new Posicao(contador+aux);
+						jogador.getHerois().get(0).setVivo(true);
 					}
 					if (jogador.getNumRodadas() == 2) {
 						jogador.getHerois().get(1).getPosicao()[0] = new Posicao(contador);
 						jogador.getHerois().get(1).getPosicao()[1] = new Posicao(contador+aux);
+						jogador.getHerois().get(1).setVivo(true);
 					}
 					if (jogador.getNumRodadas() == 3) {
 						jogador.getHerois().get(2).getPosicao()[0] = new Posicao(contador-aux);
 						jogador.getHerois().get(2).getPosicao()[1] = new Posicao(contador);
 						jogador.getHerois().get(2).getPosicao()[2] = new Posicao(contador+aux);
+						jogador.getHerois().get(2).setVivo(true);
 					}
 					if (jogador.getNumRodadas() == 4) {
 						jogador.getHerois().get(3).getPosicao()[0] = new Posicao(contador-aux);
 						jogador.getHerois().get(3).getPosicao()[1] = new Posicao(contador);
 						jogador.getHerois().get(3).getPosicao()[2] = new Posicao(contador+aux);
 						jogador.getHerois().get(3).getPosicao()[3] = new Posicao(contador+aux*2);
+						jogador.getHerois().get(3).setVivo(true);
 					}
 					if (jogador.getNumRodadas() == 5) {
 						jogador.getHerois().get(4).getPosicao()[0] = new Posicao(contador-aux);
 						jogador.getHerois().get(4).getPosicao()[1] = new Posicao(contador);
 						jogador.getHerois().get(4).getPosicao()[2] = new Posicao(contador+aux);
 						jogador.getHerois().get(4).getPosicao()[3] = new Posicao(contador+aux*2);
+						jogador.getHerois().get(4).setVivo(true);
 					}
-				} 
-				else {
-					if (jogador.getNumRodadas() >= 5) {
+					if (jogador.getNumRodadas() >= 6 ) {
 						//
-						if (e.getSource() == getButtonsTab1()[contador]) {
-								JOptionPane.showMessageDialog(null,"O jogo ja comecou, escolha a Posicao "
+						JOptionPane.showMessageDialog(null,"O jogo ja comecou, escolha a Posicao "
 												+ "que deseja atacar no tabuleiro do Player 2");
-						}
-						if (e.getSource() == getButtonsTab2()[contador]) {
+					} 
+					setEscolha(true);
+				} 
+				if (e.getSource() == getButtonsTab2()[contador]) {
 								getButtonsTab2()[contador].setEnabled(false);
 								getButtonsTab2()[contador].setFundo(1);
 								jogador.setNumRodadas(jogador.getNumRodadas() + 1);
 								cliente.getSaida().println("#"+contador);
-						}
-					}
 				}
 			}
 		} catch (Exception exception) {
-			JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
+			JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto do Tabuleiro");
 			exception.printStackTrace();
 		}
 	}
@@ -154,11 +156,11 @@ public class TelaTabuleiro implements ActionListener {
 		this.buttonsTab2 = buttonsTab2;
 	}
 
-	public String getPosicao() {
+	public boolean isPosicao() {
 		return posicao;
 	}
 
-	public void setPosicao(String posicao) {
+	public void setPosicao(boolean posicao) {
 		this.posicao = posicao;
 	}
 
@@ -169,4 +171,13 @@ public class TelaTabuleiro implements ActionListener {
 	public void setJogador(Jogador jogador) {
 		this.jogador = jogador;
 	}
+
+	public boolean isEscolha() {
+		return escolha;
+	}
+
+	public void setEscolha(boolean escolha) {
+		this.escolha = escolha;
+	}
+	
 }

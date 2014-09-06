@@ -1,20 +1,30 @@
 package Jogo;
 
+/**
+ * Atributos da classe Heroi 
+ * - Nome
+ * - Posicao (2 ate 4)
+ * - Vida
+ * - Porder de Ataque
+ * - Porder de Defesa
+ */
+
 public class Heroi {
 	private String nome;
 	private Posicao[] posicao;
 	private int vida;
 	private double ataque, defesa;
 	private boolean superVelocidade;
+	private boolean vivo; 
 
-	public Heroi(String nome, Posicao[] posicao, int vida, double ataque,
-			double defesa) {
+	public Heroi(String nome, Posicao[] posicao, int vida, double ataque, double defesa) {
 		
 		 setNome(nome);
 		 setPosicao(posicao);
 		 setVida(vida);
 		 setAtaque(ataque);
 		 setDefesa(defesa);
+		 setVivo(false);
 	}
 	
 	public void caminha(String direcao) {
@@ -124,6 +134,14 @@ public class Heroi {
 		System.out.println("O heroi "+ getNome() +" tomou uma po��o de velocidade.");
 	}
 	
+
+	public boolean isVivo() {
+		return vivo;
+	}
+
+	public void setVivo(boolean vivo) {
+		this.vivo = vivo;
+	}
 
 	public String getNome() {
 		return nome;
