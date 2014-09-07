@@ -10,10 +10,10 @@ import Jogo.*;
 import Socket.Cliente;
 
 /**
- * Batalha Naval (Ultimate Battle) - Versao 2.2 de Interface Grafica 
- * (telaTabuleiros)
+ * Batalha Naval (Projeto GeracaoTec) - Versao 2.2 de Interface Grafica 
+ * Classe: telaTabuleiros
  * Essa classe eh responsavel pela Tela dos Tabuleiros (Player 1 e 2)
- * Cada tabuleiro tem 100 Botoes: 0-99, a interface eh preparada para
+ * Cada tabuleiro tem 100 Botoes (0-99), sendo que a interface eh preparada para
  * marcar os 5 primeiros "clicks" no primeiro tabuleiro que representa a escolha
  * da posicao das Pecas/Navios, depois soh aceita "clicks" no segundo tabuleiro
  * (Player 2).
@@ -21,7 +21,6 @@ import Socket.Cliente;
  */
 
 public class TelaTabuleiro implements ActionListener {
-
 	// Declara Telas (JPanel`s)
 	private JPanel tabuleiro1;
 	private JPanel tabuleiro2;
@@ -59,20 +58,18 @@ public class TelaTabuleiro implements ActionListener {
 		getTabuleiro2().setVisible(false);
 		getTabuleiro1().setVisible(true);
 	}
-
-	// Manipulador de Acoes - Botoes (0-99)
+	// Manipulador de Acoes - Botoes (0-99) de ambos tabuleiros (Player 1 e 2)
 	public void actionPerformed(ActionEvent e) {
 		try {
-			for (int contador = 0; contador < 100; contador++) {
+			for (int contador = 0; contador < 100; contador++) { // Se "apertar" no Tabuleiro (Player 1)
 				// PRIMEIRA ETAPA - Escolhendo a Posicao para cada Peca/Navio
-				// Escolhas (Navios/Posicao)
 				if (e.getSource() == getButtonsTab1()[contador]) {
-					int aux;
-					if (posicao)
+					int aux; 		// Valor auxiliar para estabelecer Posicoes
+					if (posicao) 	// TRUE: Vertical // FALSE: Horizontal
 						 aux = 1;
 					else
 						 aux = 10;
-					// Cria posicao do Heroi 
+					// Cria posicao do Heroi levando em conta numero de Rodadas e Tamanho/Posicoes do Navio
 					if (jogador.getNumRodadas() == 1) {
 						jogador.getHerois().get(0).getPosicao()[0] = new Posicao(contador);
 						jogador.getHerois().get(0).getPosicao()[1] = new Posicao(contador+aux);
@@ -103,18 +100,17 @@ public class TelaTabuleiro implements ActionListener {
 						jogador.getHerois().get(4).getPosicao()[3] = new Posicao(contador+aux*2);
 						jogador.getHerois().get(4).setVivo(true);
 					}
-					if (jogador.getNumRodadas() >= 6 ) {
-						//
+					if (jogador.getNumRodadas() >= 6 ) {  // Mensagem de orientacao
 						JOptionPane.showMessageDialog(null,"O jogo ja comecou, escolha a Posicao "
 												+ "que deseja atacar no tabuleiro do Player 2");
 					} 
-					setEscolha(true);
+					setEscolha(true); // Marca como escolhido
 				} 
-				if (e.getSource() == getButtonsTab2()[contador]) {
+				if (e.getSource() == getButtonsTab2()[contador]) { // Se "apertar" no Tabuleiro Adversario
 								getButtonsTab2()[contador].setEnabled(false);
 								getButtonsTab2()[contador].setFundo(1);
 								jogador.setNumRodadas(jogador.getNumRodadas() + 1);
-								cliente.getSaida().println("#"+contador);
+								cliente.getSaida().println("@"+contador);
 				}
 			}
 		} catch (Exception exception) {
@@ -122,62 +118,47 @@ public class TelaTabuleiro implements ActionListener {
 			exception.printStackTrace();
 		}
 	}
-
-	
+	// Getters and Setters
 	public JPanel getTabuleiro1() {
 		return tabuleiro1;
 	}
-
 	public void setTabuleiro1(JPanel tabuleiro1) {
 		this.tabuleiro1 = tabuleiro1;
 	}
-
 	public JPanel getTabuleiro2() {
 		return tabuleiro2;
 	}
-
 	public void setTabuleiro2(JPanel tabuleiro2) {
 		this.tabuleiro2 = tabuleiro2;
 	}
-
 	public Botao[] getButtonsTab1() {
 		return buttonsTab1;
 	}
-
 	public void setButtonsTab1(Botao[] buttonsTab1) {
 		this.buttonsTab1 = buttonsTab1;
 	}
-
-	public Botao[] getButtonsTab2() {
+    public Botao[] getButtonsTab2() {
 		return buttonsTab2;
 	}
-
 	public void setButtonsTab2(Botao[] buttonsTab2) {
 		this.buttonsTab2 = buttonsTab2;
 	}
-
 	public boolean isPosicao() {
 		return posicao;
 	}
-
 	public void setPosicao(boolean posicao) {
 		this.posicao = posicao;
 	}
-
 	public Jogador getJogador() {
 		return jogador;
 	}
-
 	public void setJogador(Jogador jogador) {
 		this.jogador = jogador;
 	}
-
 	public boolean isEscolha() {
 		return escolha;
 	}
-
 	public void setEscolha(boolean escolha) {
 		this.escolha = escolha;
 	}
-	
 }

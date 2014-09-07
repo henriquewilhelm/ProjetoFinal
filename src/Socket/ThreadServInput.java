@@ -94,7 +94,7 @@ public class ThreadServInput implements Runnable {
    										System.out.println("Informacao do cliente 2: " + msg);
    									}	
    								}
-   								else if (msg.equals("QUIT")){ 
+   								else if (msg.equals("$QUIT")){ 
    									// Desconecta
    									servidor.desconecta();
    								}

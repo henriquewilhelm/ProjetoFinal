@@ -26,7 +26,6 @@ public class Jogador {
 	private int numRodadas = 1;
 	private ArrayList<Heroi> herois;
 	private int vida;
-	private Mapa mapa;
 	private int numeroNavios;
 	private int medalhas;
 	private int vitorias;
@@ -36,7 +35,6 @@ public class Jogador {
 	public Jogador(String nome, int tamanho){
 		this.nome= nome;
 		this.herois = new ArrayList<Heroi>();
-		this.mapa = new Mapa(tamanho);
 		this.numeroNavios = 5;
 		this.vida = 100;
 		this.medalhas = 5;
@@ -49,19 +47,19 @@ public class Jogador {
 	public void criaHerois(){
 		
 		Posicao[] posicoesNavio1 = new Posicao[2];
-		Heroi Navio1 = new Heroi("Barco", posicoesNavio1, 100, 75, 50);
+		Heroi Navio1 = new Heroi("Barco", posicoesNavio1, 2);
 		
 		Posicao[] posicoesNavio2 = new Posicao[2];
-		Heroi Navio2 = new Heroi("Costeiro", posicoesNavio2, 100, 75, 50);
+		Heroi Navio2 = new Heroi("Costeiro", posicoesNavio2, 2);
 		
 		Posicao[] posicoesNavio3 = new Posicao[3];
-		Heroi Navio3 = new Heroi("Destroyer", posicoesNavio3, 100, 75, 50);
+		Heroi Navio3 = new Heroi("Destroyer", posicoesNavio3, 3);
 		
 		Posicao[] posicoesNavio4 = new Posicao[4];
-		Heroi Navio4 = new Heroi("Cargueiro", posicoesNavio4, 100, 75, 50);
+		Heroi Navio4 = new Heroi("Cargueiro", posicoesNavio4, 4);
 		
 		Posicao[] posicoesNavio5 = new Posicao[4];
-		Heroi Navio5 = new Heroi("Submarino", posicoesNavio5, 100, 75, 50);
+		Heroi Navio5 = new Heroi("Submarino", posicoesNavio5, 4);
 		
 		this.herois.add(Navio1);
 		this.herois.add(Navio2);
@@ -91,12 +89,6 @@ public class Jogador {
 	}
 	public void setHerois(ArrayList<Heroi> herois) {
 		this.herois = herois;
-	}
-	public Mapa getMapa() {
-		return mapa;
-	}
-	public void setMapa(Mapa mapa) {
-		this.mapa = mapa;
 	}
 	public int getVida() {
 		return this.vida;

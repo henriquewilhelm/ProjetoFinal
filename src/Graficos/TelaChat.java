@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import Socket.Cliente;
 
 /**
- * Batalha Naval (Ultimate Battle) - Versao 2.1 de Interface Grafica 
+ * Batalha Naval (Projeto GeracaoTec) - Versao 2.1 de Interface Grafica 
  * (TelaChat) 
  * Esta classe eh responsavel pela Tela do Chat (Bate-Papo). Ela
  * possui dois Campos de Texto (TextField e TextArea com ScrollPane)
@@ -31,29 +31,30 @@ public class TelaChat {
 	private JScrollPane scrollPane;
 	private JTextField textFieldChat;
 	private JButton buttonChat; // Enviar
-	
+	// Declara Classe de Comunicacao de Dados
 	private Cliente cliente;
 	// Construtor da Tela
 	public TelaChat(Cliente cliente){
 		this.cliente = cliente;
 		// Cria nova Tela (JPanel)
 		setPanelChat(new JPanel(new GridBagLayout()));
-        ButtonHandler handler = new ButtonHandler();
-        
+        // Cria manipulador de eventos
+		ButtonHandler handler = new ButtonHandler();
+        // Cria Campo de texto
         setTextFieldChat(new JTextField(20));
-        getTextFieldChat().addActionListener(handler);
-        
+        // Cria Campo de texto com um ScrollPane (Barra de Rolagem)
         setTextAreaConversas(new JTextArea(5, 20));
         getTextAreaConversas().setEditable(false);
         scrollPane = new JScrollPane(textAreaConversas);
-        
+        // Cria botao Enviar
         setButtonChat(new JButton("Enviar"));
+        
+        getTextFieldChat().addActionListener(handler);
         getButtonChat().addActionListener(handler);
         
-        //Add Components to this panel.
+        // Adicionando Componentes a Tela (JPanel).
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
- 
         c.fill = GridBagConstraints.HORIZONTAL;
         getPanelChat().add(scrollPane, c);
  
@@ -63,10 +64,11 @@ public class TelaChat {
         getPanelChat().add(textFieldChat, c);
         getPanelChat().add(buttonChat);
 	}
+	// Manipulador de Acoes - Botoes (BottonsChat)
 	private class ButtonHandler implements ActionListener {
-		// Manipulador de Acoes - Botoes (BottonsChat)
 		public void actionPerformed(ActionEvent e) {
-			try {       
+			try {
+				// Se botao for apertado
 				if (e.getSource() == getButtonChat()) {
 					System.out.println(getTextFieldChat().getText());
 					//Printa na saida

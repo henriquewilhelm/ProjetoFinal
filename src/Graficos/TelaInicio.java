@@ -1,35 +1,36 @@
 package Graficos;
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Container;
+import java.awt.BorderLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import Socket.Cliente;
 
+/**
+ * Batalha Naval (Projeto GeracaoTec) v1.0 - Versao 2.2 de Interface Grafica 
+ * Classe: telaInicio
+ * Tela inicial responsavel por chamar e organizar a TelaConexao, junto a imagem 
+ * de apresentacao do jogo.
+ * Autor: Henrique Wilhelm 
+ */
 
 public class TelaInicio {
-
-	private TelaConexao telaConexao;
+	// Declara Classe Grafica
+ 	private TelaConexao telaConexao;
+ 	// Declara Telas
 	private JPanel telaInicio;
-	private Cliente cliente;
-	private JPanel cards;
-	public TelaInicio(JPanel telaPrincipal, Cliente cliente, JPanel cards){
-		
+	// Declara Classe de Comunicacao de Dados
+	// Construtor, recebe a tela Principal, Cliente (Pacote de Comunicacao e o Card de delas)
+	public TelaInicio(Cliente cliente, JPanel cards){
 		this.telaInicio = new JPanel();
-		this.telaConexao = new TelaConexao(telaPrincipal, cliente, cards);
+		this.telaConexao = new TelaConexao(telaInicio, cliente, cards);
 		this.telaInicio.add(this.telaConexao.getPanelConexao());
-		this.cards = cards;
 	}
+	// Getter and Setters
 	public JPanel getTelaInicio() {
 		return telaInicio;
 	}
 	public void setTelaInicio(JPanel telaInicio) {
 		this.telaInicio = telaInicio;
 	}
-	
-	
-	
 }

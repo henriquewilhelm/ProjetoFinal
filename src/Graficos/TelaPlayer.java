@@ -1,20 +1,12 @@
 package Graficos;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.PrintStream;
-
 import javax.swing.*;
-
 import Jogo.Jogador;
-import Socket.Cliente;
 
 /**
- * Batalha Naval (Ultimate Battle) v1.0 
- * Versao 3.0 de Interface Grafica
- * (telaPlayer)
+ * Batalha Naval (Projeto GeracaoTec) v1.0 -  Versao 2.2 de Interface Grafica
+ * Classe: telaPlayer
  * Essa classe eh responsavel pela Tela do Jogador, apresenta todos
  * os dados do jogador como imgem, nome, barra de vida, quantidade de barcos,
  * quantidade de medalhas, numero de vitorias, derrotas e total de jogos
@@ -22,57 +14,52 @@ import Socket.Cliente;
  */
 
 public class TelaPlayer {
-
+	// Declara tela Principal
 	private JPanel panelPlayer;
-	
+	// Declara Sub-Telas
 	private JPanel telaImg;
 	private JPanel telaMenu;
-	
 	private JPanel telaVida;
 	private JPanel telaNavios;
 	private JPanel telaMedalhas;
 	private JPanel telaOutros;
-	
+	// Declara Sub-sub-Telas
 	private JPanel caixaVida;
 	private JPanel caixaNavios;
 	private JPanel caixaMedalhas;
-	
+	// Declara Componentes
 	private JLabel vidaText;
 	private JLabel naviosText;
 	private JLabel medalhasText;
 	private JLabel vitoriasText;
 	private JLabel derrotasText;
 	private JLabel totalText;
-	
+	// Declara Componentes
 	private JLabel img;
-	private Icon imagem = new ImageIcon(getClass().getResource("img/capitao/capitao.jpg"));
+	private Icon imagem = new ImageIcon("img/capitao/capitao.jpg");
 	private JLabel nome;
-	
 	private JLabel vida[];
 	private JLabel navios[];
 	private JLabel vitorias[];
 	private JLabel derrotas;
 	private JLabel total;
-	
-		
+	// Construtor, recebe Jogador	
 	public TelaPlayer(Jogador player) {
-	
+		// Instancia Tela
 		this.panelPlayer = new JPanel(new BorderLayout());
-		
+		// Instancia Sub-telas
 		this.telaImg = new JPanel();
 		this.telaMenu = new JPanel(new GridLayout(2,4));
-		
 		this.telaImg.setLayout(new BoxLayout(telaImg,BoxLayout.Y_AXIS));
-		
 		this.telaVida = new JPanel(new FlowLayout());
 		this.telaNavios = new JPanel(new BorderLayout());
 		this.telaMedalhas = new JPanel(new BorderLayout());
 		this.telaOutros = new JPanel(new BorderLayout());
-
+		// Instancia Sub-sub-Telas
 		this.caixaVida = new JPanel(new GridLayout(1,15));
 		this.caixaNavios = new JPanel(new GridLayout(1,5));
 		this.caixaMedalhas = new JPanel(new GridLayout(1,player.getVitorias()));
-		
+		// Instancia Componentes (Labels)
 		this.img = new JLabel(imagem);
 		this.nome = new JLabel("nome");
 		this.nome.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -89,10 +76,10 @@ public class TelaPlayer {
 		this.derrotasText.setFont(new Font("Verdana", Font.BOLD, 12));
 		this.totalText = new JLabel("Total");
 		this.totalText.setFont(new Font("Verdana", Font.BOLD, 12));
-		
+		// Cria e Instancia Sub-Telas
 		this.vida = new JLabel[15];
 		for (int i =0; i<vida.length; i++){
-			this.vida[i] = new JLabel(new ImageIcon(this.getClass().getResource("img/vida/vida1.jpg")));
+			this.vida[i] = new JLabel(new ImageIcon("img/vida/vida1.jpg"));
 			this.caixaVida.add(this.vida[i]);
 		}
 		this.navios = new JLabel[5];
@@ -100,21 +87,21 @@ public class TelaPlayer {
 			this.navios[i] = new JLabel();
 			this.caixaNavios.add(this.navios[i]);
 		}
-		
 		this.vitorias = new JLabel[player.getMedalhas()];
 		for (int i =0; i<vitorias.length; i++){
 			String dirMedalha = "img/medalhas/medalha" + Integer.toString((i+1)) + ".jpg";
-			this.vitorias[i] = new JLabel(new ImageIcon(this.getClass().getResource(dirMedalha)));
+			this.vitorias[i] = new JLabel(new ImageIcon(dirMedalha));
 			this.caixaMedalhas.add(this.vitorias[i]);
 		}
-
+		// Pega informacoes do Jogador
 		this.getNome().setText(player.getNome());
 		this.getVitoriasText().setText("Vitorias: " + Integer.toString(player.getVitorias()));
 		this.getDerrotasText().setText("Derrotas: " + Integer.toString(player.getDerrotas()));
 		this.getTotalText().setText("Numero de Partidas: " + Integer.toString(player.getTotalJogos()));
-		
+		// Adicionando Componentes as Sub-Telas
 		this.telaVida.add(this.vidaText);
 		this.telaVida.add(this.caixaVida);
+		// Adicionando Sub-sub-telas a sub-Telas
 		this.telaMedalhas.add(this.medalhasText, BorderLayout.WEST);
 		this.telaMedalhas.add(this.caixaMedalhas, BorderLayout.CENTER);
 		this.telaNavios.add(this.naviosText, BorderLayout.WEST);
@@ -122,20 +109,17 @@ public class TelaPlayer {
 		this.telaOutros.add(this.vitoriasText, BorderLayout.NORTH);
 		this.telaOutros.add(this.derrotasText, BorderLayout.CENTER);
 		this.telaOutros.add(this.totalText, BorderLayout.SOUTH);
-		
+		// Adicionando Sub-telas a Telas
 		this.telaMenu.add(this.telaVida);
 		this.telaMenu.add(this.telaMedalhas);
 		this.telaMenu.add(this.telaNavios);
 		this.telaMenu.add(this.telaOutros);
-		
-		this.panelPlayer.add(telaMenu, BorderLayout.CENTER);
-		
 		this.telaImg.add(this.img);
 		this.telaImg.add(this.nome);
-		
+		// Adicionando Telas a Tela Principal
+		this.panelPlayer.add(telaMenu, BorderLayout.CENTER);
 		this.panelPlayer.add(telaImg, BorderLayout.WEST);
 	}
-
 	// Getters and Setters
 	public JPanel getPanelPlayer() {
 		return panelPlayer;

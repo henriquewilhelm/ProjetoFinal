@@ -1,3 +1,5 @@
+// (c)2014|carlosedusousa.
+
 package Graficos;
 
 import java.awt.EventQueue;

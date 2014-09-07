@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- * Batalha Naval (Ultimate Battle) - Versao 2.1 de Interface Grafica 
- * (Botao) 
- * Esta classe eh responsavel pela criacao do nosso botao personalizado, que sera usado 
- * dentro dos tabuleiros.  
+ * Batalha Naval (Ultimate Battle) - Versao 2.2 de Interface Grafica 
+ * Classe: Botao
+ * Esta classe eh responsavel pela criacao do botao personalizado, que sera usado dentro dos 
+ * tabuleiros. 
  * Ela extende a classe JButton ou seja, herda todos metodos da classe JButton apenas reescreve
  * o metodo o paintComponent que é responsavel pela aparencia padrao dos Botoes em Java. Alem de 
  * reescrever este metodo, criei novo metodo (setFundo(int i)) que passa um inteiro para o objeto
@@ -24,7 +24,7 @@ import javax.swing.*;
 public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas de JButton  
 
 	private static final long serialVersionUID = 1L;
-	private int i=0;
+	// Declara COmponentes
     private JLabel label ;  
     private ArrayList<ImageIcon> imagem;
     private ArrayList<ImageIcon> aux;
@@ -38,7 +38,8 @@ public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas 
     private ArrayList<ImageIcon> imagemHorizontal3;
     private ArrayList<ImageIcon> imagemHorizontal4;
     private ArrayList<ImageIcon> imagemHorizontal5;
-    
+    // Declara Variaveis auxiliares
+    private int i=0;
     // Construtor de Botao com nome
     public Botao(String text){  
         this(); 
@@ -49,8 +50,8 @@ public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas 
         label = new JLabel();  
         this.add(label);
         imagem = new ArrayList<ImageIcon>();
-        imagem.add(new ImageIcon(this.getClass().getResource("img/mar1.jpg")));
-        imagem.add(new ImageIcon(this.getClass().getResource("img/mar2.jpg")));
+        imagem.add(new ImageIcon("img/tabuleiro/mar1.jpg"));
+        imagem.add(new ImageIcon("img/tabuleiro/mar2.jpg"));
         aux = imagem;
         criaImagens();
     }
@@ -65,7 +66,7 @@ public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas 
        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);    
            
        final Image backgroundImage = imagem.get(i).getImage();    
-       // Pega tamanho da imagem
+       // Pega tamanho da imagem  (Obs: A imagem determina o tamanho do botao)
        double scaleX = getWidth() / (double) backgroundImage.getWidth(null);    
        double scaleY = getHeight() / (double) backgroundImage.getHeight(null);
        AffineTransform xform = AffineTransform.getScaleInstance(scaleX, scaleY);
@@ -87,58 +88,59 @@ public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas 
 	   this.imagemHorizontal5 = new ArrayList<ImageIcon>();
 	    
 	   	// Adiciona Imagem do Barco 1 ao Array
-	    this.imagemVertical1.add(new ImageIcon(this.getClass().getResource("img/vertical/1a.jpg")));	    
-	    this.imagemVertical1.add(new ImageIcon(this.getClass().getResource("img/vertical/1b.jpg")));
+	    this.imagemVertical1.add(new ImageIcon("img/navios/vertical/1a.jpg"));	    
+	    this.imagemVertical1.add(new ImageIcon("img/navios/vertical/1b.jpg"));
 	    // Adiciona Imagem do Barco 2 ao Array
-	    this.imagemVertical2.add(new ImageIcon(this.getClass().getResource("img/vertical/2a.jpg")));
-	    this.imagemVertical2.add(new ImageIcon(this.getClass().getResource("img/vertical/2b.jpg")));
+	    this.imagemVertical2.add(new ImageIcon("img/navios/vertical/2a.jpg"));
+	    this.imagemVertical2.add(new ImageIcon("img/navios/vertical/2b.jpg"));
 	    // Adiciona Imagem do Barco 3 ao Array
-	    this.imagemVertical3.add(new ImageIcon(this.getClass().getResource("img/vertical/3a.jpg")));
-	    this.imagemVertical3.add(new ImageIcon(this.getClass().getResource("img/vertical/3b.jpg")));
-	    this.imagemVertical3.add(new ImageIcon(this.getClass().getResource("img/vertical/3c.jpg")));
+	    this.imagemVertical3.add(new ImageIcon("img/navios/vertical/3a.jpg"));
+	    this.imagemVertical3.add(new ImageIcon("img/navios/vertical/3b.jpg"));
+	    this.imagemVertical3.add(new ImageIcon("img/navios/vertical/3c.jpg"));
 	    // Adiciona Imagem do Barco 4 ao Array
-	    this.imagemVertical4.add(new ImageIcon(this.getClass().getResource("img/vertical/4a.jpg")));
-	    this.imagemVertical4.add(new ImageIcon(this.getClass().getResource("img/vertical/4b.jpg")));
-	    this.imagemVertical4.add(new ImageIcon(this.getClass().getResource("img/vertical/4c.jpg")));
-	    this.imagemVertical4.add(new ImageIcon(this.getClass().getResource("img/vertical/4d.jpg")));
+	    this.imagemVertical4.add(new ImageIcon("img/navios/vertical/4a.jpg"));
+	    this.imagemVertical4.add(new ImageIcon("img/navios/vertical/4b.jpg"));
+	    this.imagemVertical4.add(new ImageIcon("img/navios/vertical/4c.jpg"));
+	    this.imagemVertical4.add(new ImageIcon("img/navios/vertical/4d.jpg"));
 	    // Adiciona Imagem do Barco 5 ao Array
-	    this.imagemVertical5.add(new ImageIcon(this.getClass().getResource("img/vertical/5a.jpg")));
-	    this.imagemVertical5.add(new ImageIcon(this.getClass().getResource("img/vertical/5b.jpg")));
-	    this.imagemVertical5.add(new ImageIcon(this.getClass().getResource("img/vertical/5c.jpg")));
-	    this.imagemVertical5.add(new ImageIcon(this.getClass().getResource("img/vertical/5d.jpg")));
+	    this.imagemVertical5.add(new ImageIcon("img/navios/vertical/5a.jpg"));
+	    this.imagemVertical5.add(new ImageIcon("img/navios/vertical/5b.jpg"));
+	    this.imagemVertical5.add(new ImageIcon("img/navios/vertical/5c.jpg"));
+	    this.imagemVertical5.add(new ImageIcon("img/navios/vertical/5d.jpg"));
 	    
 	    // Adiciona Imagem do Barco 1 ao Array
-	    this.imagemHorizontal1.add(new ImageIcon(this.getClass().getResource("img/horizontal/1b.jpg")));	    
-	    this.imagemHorizontal1.add(new ImageIcon(this.getClass().getResource("img/horizontal/1a.jpg")));
+	    this.imagemHorizontal1.add(new ImageIcon("img/navios/horizontal/1b.jpg"));	    
+	    this.imagemHorizontal1.add(new ImageIcon("img/navios/horizontal/1a.jpg"));
 	    // Adiciona Imagem do Barco 2 ao Array
-	    this.imagemHorizontal2.add(new ImageIcon(this.getClass().getResource("img/horizontal/2b.jpg")));
-	    this.imagemHorizontal2.add(new ImageIcon(this.getClass().getResource("img/horizontal/2a.jpg")));
+	    this.imagemHorizontal2.add(new ImageIcon("img/navios/horizontal/2b.jpg"));
+	    this.imagemHorizontal2.add(new ImageIcon("img/navios/horizontal/2a.jpg"));
 	    // Adiciona Imagem do Barco 3 ao Array
-	    this.imagemHorizontal3.add(new ImageIcon(this.getClass().getResource("img/horizontal/3c.jpg")));
-	    this.imagemHorizontal3.add(new ImageIcon(this.getClass().getResource("img/horizontal/3b.jpg")));
-	    this.imagemHorizontal3.add(new ImageIcon(this.getClass().getResource("img/horizontal/3a.jpg")));
+	    this.imagemHorizontal3.add(new ImageIcon("img/navios/horizontal/3c.jpg"));
+	    this.imagemHorizontal3.add(new ImageIcon("img/navios/horizontal/3b.jpg"));
+	    this.imagemHorizontal3.add(new ImageIcon("img/navios/horizontal/3a.jpg"));
 	    // Adiciona Imagem do Barco 4 ao Array
-	    this.imagemHorizontal4.add(new ImageIcon(this.getClass().getResource("img/horizontal/4d.jpg")));
-	    this.imagemHorizontal4.add(new ImageIcon(this.getClass().getResource("img/horizontal/4c.jpg")));
-	    this.imagemHorizontal4.add(new ImageIcon(this.getClass().getResource("img/horizontal/4b.jpg")));
-	    this.imagemHorizontal4.add(new ImageIcon(this.getClass().getResource("img/horizontal/4a.jpg")));
+	    this.imagemHorizontal4.add(new ImageIcon("img/navios/horizontal/4d.jpg"));
+	    this.imagemHorizontal4.add(new ImageIcon("img/navios/horizontal/4c.jpg"));
+	    this.imagemHorizontal4.add(new ImageIcon("img/navios/horizontal/4b.jpg"));
+	    this.imagemHorizontal4.add(new ImageIcon("img/navios/horizontal/4a.jpg"));
 	    // Adiciona Imagem do Barco 5 ao Array
-	    this.imagemHorizontal5.add(new ImageIcon(this.getClass().getResource("img/horizontal/5d.jpg")));
-	    this.imagemHorizontal5.add(new ImageIcon(this.getClass().getResource("img/horizontal/5c.jpg")));
-	    this.imagemHorizontal5.add(new ImageIcon(this.getClass().getResource("img/horizontal/5b.jpg")));
-	    this.imagemHorizontal5.add(new ImageIcon(this.getClass().getResource("img/horizontal/5a.jpg")));
+	    this.imagemHorizontal5.add(new ImageIcon("img/navios/horizontal/5d.jpg"));
+	    this.imagemHorizontal5.add(new ImageIcon("img/navios/horizontal/5c.jpg"));
+	    this.imagemHorizontal5.add(new ImageIcon("img/navios/horizontal/5b.jpg"));
+	    this.imagemHorizontal5.add(new ImageIcon("img/navios/horizontal/5a.jpg"));
    }
-   // Muda a imagem (image[int i]) do fundo do botao  (Obs: A imagem determina o tamanho do botao)
+   // Muda a imagem (image[int i]) do fundo do botao 
    public void setFundo(int tipo){
 	   		this.i = tipo;
    }	   
-   
+   // Reset no fundo (Volta ao padrao do tabuleiro)
    public void setFundo(){
 		  this.imagem = aux;
 		  this.i =0;
    }
-	
+   // Muda imagem do fundo, conforme posicao do navio
    public void setFundo(boolean posicao, int tipo){
+	   // Conforme Tipo e Posicao a variavel da imagem (fundo do botao) muda
 	   if (tipo == 0){
 		   if (!posicao)
 			   this.imagem = this.imagemVertical1;
