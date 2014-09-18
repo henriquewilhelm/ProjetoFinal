@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.0
  * (Thread Cliente Input)
- * Essa classe (thread) é responsavel pelo recebimento dos dados de cada servidor para nao ocupar a 
+ * Essa classe (thread) ï¿½ responsavel pelo recebimento dos dados de cada servidor para nao ocupar a 
  * a classe "Pai".
  */
 
@@ -23,11 +23,8 @@ public class ThreadClientInput implements Runnable {
 		   		// recebe msgs do servidor e imprime na tela
   				Scanner s = new Scanner(this.inputCliente);
 		   		try{
-		   			
 		   			while (s.hasNextLine()) {
-		   				// System.out.println(s.nextLine());
 		   				cliente.setComandoEntrada(s.nextLine());
-		   				System.out.println(cliente.getComandoEntrada());
 		   			}
 		   		}catch (Exception e) {
 					// TODO: handle exception

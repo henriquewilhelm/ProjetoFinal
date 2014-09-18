@@ -42,13 +42,14 @@ public class TelaChat {
 		ButtonHandler handler = new ButtonHandler();
         // Cria Campo de texto
         setTextFieldChat(new JTextField(20));
+        getTextFieldChat().addActionListener(handler);
         // Cria Campo de texto com um ScrollPane (Barra de Rolagem)
         setTextAreaConversas(new JTextArea(5, 20));
         getTextAreaConversas().setEditable(false);
         scrollPane = new JScrollPane(textAreaConversas);
         // Cria botao Enviar
         setButtonChat(new JButton("Enviar"));
-        
+    
         getTextFieldChat().addActionListener(handler);
         getButtonChat().addActionListener(handler);
         
@@ -70,16 +71,21 @@ public class TelaChat {
 			try {
 				// Se botao for apertado
 				if (e.getSource() == getButtonChat()) {
-					System.out.println(getTextFieldChat().getText());
-					//Printa na saida
+					// Escreve no Console
+					//System.out.println(getTextFieldChat().getText());
+					// Envia para o servidor
 					cliente.getSaida().println(getTextFieldChat().getText());
 				}
+				if (e.getSource() == getTextFieldChat()) {
+					cliente.getSaida().println(getTextFieldChat().getText());
+				}
+				
+				
 			} catch (Exception exception) {
 				JOptionPane.showMessageDialog(null, "ERRO - Uso incorreto");
 				exception.printStackTrace();
 			}
 		}
-		
 	}
 	public JTextArea getTextAreaConversas() {
 		return textAreaConversas;

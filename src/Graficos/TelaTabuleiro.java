@@ -70,47 +70,47 @@ public class TelaTabuleiro implements ActionListener {
 					else
 						 aux = 10;
 					// Cria posicao do Heroi levando em conta numero de Rodadas e Tamanho/Posicoes do Navio
-					if (jogador.getNumRodadas() == 1) {
+					if (jogador.getNumEscolhas() == 1) {
 						jogador.getHerois().get(0).getPosicao()[0] = new Posicao(contador);
 						jogador.getHerois().get(0).getPosicao()[1] = new Posicao(contador+aux);
 						jogador.getHerois().get(0).setVivo(true);
 					}
-					if (jogador.getNumRodadas() == 2) {
+					if (jogador.getNumEscolhas() == 2) {
 						jogador.getHerois().get(1).getPosicao()[0] = new Posicao(contador);
 						jogador.getHerois().get(1).getPosicao()[1] = new Posicao(contador+aux);
 						jogador.getHerois().get(1).setVivo(true);
 					}
-					if (jogador.getNumRodadas() == 3) {
+					if (jogador.getNumEscolhas() == 3) {
 						jogador.getHerois().get(2).getPosicao()[0] = new Posicao(contador-aux);
 						jogador.getHerois().get(2).getPosicao()[1] = new Posicao(contador);
 						jogador.getHerois().get(2).getPosicao()[2] = new Posicao(contador+aux);
 						jogador.getHerois().get(2).setVivo(true);
 					}
-					if (jogador.getNumRodadas() == 4) {
+					if (jogador.getNumEscolhas() == 4) {
 						jogador.getHerois().get(3).getPosicao()[0] = new Posicao(contador-aux);
 						jogador.getHerois().get(3).getPosicao()[1] = new Posicao(contador);
 						jogador.getHerois().get(3).getPosicao()[2] = new Posicao(contador+aux);
 						jogador.getHerois().get(3).getPosicao()[3] = new Posicao(contador+aux*2);
 						jogador.getHerois().get(3).setVivo(true);
 					}
-					if (jogador.getNumRodadas() == 5) {
+					if (jogador.getNumEscolhas() == 5) {
 						jogador.getHerois().get(4).getPosicao()[0] = new Posicao(contador-aux);
 						jogador.getHerois().get(4).getPosicao()[1] = new Posicao(contador);
 						jogador.getHerois().get(4).getPosicao()[2] = new Posicao(contador+aux);
 						jogador.getHerois().get(4).getPosicao()[3] = new Posicao(contador+aux*2);
 						jogador.getHerois().get(4).setVivo(true);
 					}
-					if (jogador.getNumRodadas() >= 6 ) {  // Mensagem de orientacao
+					if (jogador.getNumEscolhas() >= 6 ) {  // Mensagem de orientacao
 						JOptionPane.showMessageDialog(null,"O jogo ja comecou, escolha a Posicao "
 												+ "que deseja atacar no tabuleiro do Player 2");
 					} 
 					setEscolha(true); // Marca como escolhido
 				} 
 				if (e.getSource() == getButtonsTab2()[contador]) { // Se "apertar" no Tabuleiro Adversario
-								getButtonsTab2()[contador].setEnabled(false);
-								getButtonsTab2()[contador].setFundo(1);
-								jogador.setNumRodadas(jogador.getNumRodadas() + 1);
+						if (jogador.isVez())
 								cliente.getSaida().println("@"+contador);
+						else
+							JOptionPane.showMessageDialog(null,"Aguarde, ainda não é sua vez...");
 				}
 			}
 		} catch (Exception exception) {

@@ -21,7 +21,7 @@ public class Heroi {
 		 setVida(vida);
 		 setVivo(false);
 	}
-	
+
 	public void caminha(String direcao) {
 		System.out.printf("O heroi %s ", getNome() + " caminhou para ");
 		switch(direcao) {
@@ -54,8 +54,8 @@ public class Heroi {
 	}
 	public void tomarPocaoVida() {
 		this.setVida(this.getVida() + 10);
-		System.out.println("O heroi "+ getNome()+" tomou uma po��o de vida e "
-				+ "agora est� com "+this.getVida()+" pontos de vida.");
+		System.out.println("O heroi "+ getNome()+" tomou uma pocao de vida e "
+				+ "agora esta com "+this.getVida()+" pontos de vida.");
 	}
 	public boolean isVivo() {
 		return vivo;

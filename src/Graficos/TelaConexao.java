@@ -5,7 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.PrintStream;
+
 import javax.swing.*;
+
+import Jogo.Jogador;
 import Socket.Cliente;
 
 /**
@@ -24,7 +27,6 @@ public class TelaConexao {
 	// Declara Telas (JPanel)
 	private JPanel panelConexao;
 	private JPanel cont;
-	private JPanel cards;
 	// Componentes do Menu de Conexao com Servidor
 	private JLabel serverLabel;
 	private JLabel portaLabel;
@@ -38,6 +40,7 @@ public class TelaConexao {
 	private JTextField textFieldSenha;
 	// Cria e instancia Classe de Comunicacao de Dados
 	private Cliente cliente;
+
 	// Variaveis auxiliares
 	private String host;
 	private int porta;
@@ -46,11 +49,10 @@ public class TelaConexao {
 	private boolean status = false;
 	
 	// Construtor da Tela
-	public TelaConexao(JPanel cont, Cliente cliente, JPanel cards) {
+	public TelaConexao(JPanel cont, Cliente cliente) {
 		// Recebe dados por parametro
 		this.cont = cont;
-		this.cards = cards;
-		setCliente(cliente);
+		this.cliente = cliente;
 		// Cria nova Tela (JPanel)
 		setPanelConexao(new JPanel(new GridLayout(5, 2)));
 		// Cria os Componentes - Campos (TextField) e botoes (JButton)
@@ -61,9 +63,9 @@ public class TelaConexao {
 		setTextFieldPorta(new JTextField(5));
 		getTextFieldPorta().setText("22222");
 		setLoginLabel(new JLabel("Login"));
-		setTextFieldLogin(new JTextField());
+		setTextFieldLogin(new JTextField("teste"));
 		setSenhaLabel(new JLabel("Senha"));
-		setTextFieldSenha(new JTextField());
+		setTextFieldSenha(new JTextField("123456"));
 		setConectaServer(new JButton("Conecta no servidor"));
 		setCloseServer(new JButton("Desconecta"));
 		// Adiciona objetos na Tela (JPanel)
@@ -96,12 +98,9 @@ public class TelaConexao {
 					getCliente().setPorta(porta);
 					getCliente().setHost(host);
 					// Chama metodo conecta da Classe de Comunicacao de Dados 
-					setStatus(getCliente().conecta()); // Retorna TRUE e conectar
+					getCliente().setStatus(getCliente().conecta()); // Retorna TRUE se conectar
 					getConectaServer().setEnabled(false); // Desabilita botao Conecta
 					getCloseServer().setEnabled(true); // Habilita botao Desconecta
-					// Muda Tela, passa para Tela de Opcoes (Player, Multiplayer e Ranking)
-					CardLayout cl = (CardLayout)(cards.getLayout());
-			        cl.show(cards, "2");
 				} 
 				// Se botao Desconta for "apertado"
 				else if (event.getSource() == getCloseServer()) {
@@ -224,11 +223,5 @@ public class TelaConexao {
 	}
 	public void setCont(JPanel cont) {
 		this.cont = cont;
-	}
-	public JPanel getCards() {
-		return cards;
-	}
-	public void setCards(JPanel cards) {
-		this.cards = cards;
 	}
 }

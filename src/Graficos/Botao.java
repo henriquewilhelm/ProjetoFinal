@@ -52,6 +52,7 @@ public class Botao extends javax.swing.JButton {  //Herda todas caracteristicas 
         imagem = new ArrayList<ImageIcon>();
         imagem.add(new ImageIcon("img/tabuleiro/mar1.jpg"));
         imagem.add(new ImageIcon("img/tabuleiro/mar2.jpg"));
+        imagem.add(new ImageIcon("img/tabuleiro/mar3.jpg"));
         aux = imagem;
         criaImagens();
     }

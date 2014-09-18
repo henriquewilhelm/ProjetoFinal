@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
+
+import Jogo.Jogador;
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.0
  * (Servidor)
@@ -25,6 +27,9 @@ public class Servidor {
 	   private ServerSocket servidor; 
 	   private int numeroConexao = 1;
 	   
+	   private Jogador player1;
+	   private Jogador player2;
+	   
 	   // Construtor (Recebe porta)
 	   public Servidor (int porta) {
 	     this.porta = porta;
@@ -35,26 +40,30 @@ public class Servidor {
 		   	try{
 		   			// Cria e instancia ServerSocket (Passando a Porta)
 		   			servidor = new ServerSocket(this.porta);
-		   			System.out.println("Porta " + this.porta + " aberta!");
-		   
+		   			// Escreve no Console
+		   			System.out.println("Servidor -  Informação: Porta " + this.porta + " aberta...");
+			   		player1 = new Jogador("Player 1");
+				   	player2 = new Jogador("Player 2");	
+				   	player1.criaHerois();
+				   	player2.criaHerois();
+				   	
 		   			// Esperando clientes
 		   			while (true) {
 		   				if (numeroConexao<=2){
 		   						// Aceita um cliente
 		   					Socket cliente = servidor.accept();
-		   					System.out.println("Conex�o numero: " + numeroConexao + " Endere�o do Cliente: " +   
+		   					System.out.println("Servidor - Conexao numero: " + numeroConexao + " Endereco do Cliente: " +   
 		   							cliente.getInetAddress().getHostAddress());
-		   					
 		   					// L� msgs vinda do cliente e adiconando ao ArrayList de Saida Padrao do Server/Socket
 		   					saida = new PrintStream(cliente.getOutputStream());
-		   					this.clientes.add(saida);
+		   					this.clientes.add(numeroConexao-1, saida);
 	       
 		   					// Thread para receber mensagens do cliente (InputStream e Servidor)
-		   					ThreadServInput ThreadServ = new ThreadServInput(cliente.getInputStream(), this, numeroConexao);
+		   					ThreadServInput ThreadServ = new ThreadServInput(cliente.getInputStream(), this, numeroConexao, player1, player2);
 		   					new Thread(ThreadServ).start();
 		   				}
 		   				if (numeroConexao==3){
-		   					broadCast("PRONTO");
+		   					//broadCast("PRONTO");
 		   				}
 		   				if (numeroConexao>=3){
 		   					numeroConexao=1;
@@ -71,7 +80,7 @@ public class Servidor {
 	   
 	   }
 	   public void desconecta() throws IOException{
-		   		broadCast("QUIT");
+		   		broadCast("$QUIT");
 		   		servidor.close();
 	   }
 	   // Envia mensagem a todos clientes conectados;

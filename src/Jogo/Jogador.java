@@ -14,6 +14,8 @@ import java.util.ArrayList;
  *  
  * Atributos do Jogador para o Banco de Dados
  * - Nome
+ * - Numero Imagem
+ * - String Pais
  * - Numero de Medalhas (Uma a cada 5 vitorias)
  * - Numero de Vitorias 
  * - Numero de Derrotas
@@ -23,24 +25,45 @@ import java.util.ArrayList;
 public class Jogador {
 
 	private String nome;
-	private int numRodadas = 1;
+	private String senha;
+	private int numEscolhas = 1;
 	private ArrayList<Heroi> herois;
 	private int vida;
+	private int imagem;
+	private String pais;
 	private int numeroNavios;
 	private int medalhas;
 	private int vitorias;
 	private int derrotas;
 	private int totalJogos;
+	// Auxiliares
+	private int contadorHeroi = 0;
+	private int contadorPosicao = 0;
+	private boolean vez = false;
 	
-	public Jogador(String nome, int tamanho){
-		this.nome= nome;
+	public Jogador(){
+		this.nome = "";
+		this.imagem = 0;
 		this.herois = new ArrayList<Heroi>();
 		this.numeroNavios = 5;
-		this.vida = 100;
-		this.medalhas = 5;
-		this.vitorias = 25;
-		this.derrotas = 5;
-		this.totalJogos = 30;
+		this.vida = 15;
+		this.medalhas = 0;
+		this.vitorias = 0;
+		this.derrotas = 0;
+		this.totalJogos = 0;
+		this.criaHerois();
+	}
+	
+	public Jogador(String nome){
+		setNome(nome);
+		this.imagem = 0;
+		this.herois = new ArrayList<Heroi>();
+		this.numeroNavios = 5;
+		this.vida = 15;
+		this.medalhas = 0;
+		this.vitorias =0;
+		this.derrotas = 0;
+		this.totalJogos = 0;
 		this.criaHerois();
 	}
 
@@ -68,21 +91,73 @@ public class Jogador {
 		this.herois.add(Navio5);
 	}
 	
-	public Heroi pegaHeroi(int index){
-		return this.herois.get(index);
+	public void addHeroi(int posicao) {
+		if (getContadorHeroi() <= 4){
+			if (getContadorPosicao()==getHerois().get(getContadorHeroi()).getPosicao().length){
+				setContadorHeroi(getContadorHeroi()+1);
+				setContadorPosicao(0);
+			}
+			this.getHerois().get(getContadorHeroi()).getPosicao()[getContadorPosicao()] = new Posicao(posicao);
+			setContadorPosicao(getContadorPosicao()+1);
+			if  (getContadorHeroi() == 4 && getContadorPosicao() == 3){
+				setVez(true);
+			}
+		}
+		else {
+				setContadorHeroi(0);
+		}
+	}	
+	
+	public boolean verificaPosicao(int posicao) {
+		 for (int contadorHeroi = 0; contadorHeroi < 5; contadorHeroi++){
+	        	for (int contadorPosicao = 0; contadorPosicao < this.getHerois().get(contadorHeroi).getPosicao().length; contadorPosicao++){
+	        		if (this.getHerois().get(contadorHeroi).getPosicao()[contadorPosicao].getX() == posicao){
+						return true;
+	        		}
+	        	}
+		 }
+		return false;
 	}
+	
+	public int verificaHeroi(int posicao) {
+		int aux = 0; 
+		for (int contadorHeroi = 0; contadorHeroi < 5; contadorHeroi++){
+	        	for (int contadorPosicao = 0; contadorPosicao < this.getHerois().get(contadorHeroi).getPosicao().length; contadorPosicao++){
+	        		if (this.getHerois().get(contadorHeroi).getPosicao()[contadorPosicao].getX() == posicao){
+	        			aux = contadorHeroi;
+	        		}
+	        	}
+		 }
+		return aux;
+	}
+
 	// S and G
+	
 	public String getNome() {
 		return nome;
 	}
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getNumRodadas() {
-		return numRodadas;
+	public boolean isVez() {
+		return vez;
 	}
-	public void setNumRodadas(int numRodadas) {
-		this.numRodadas = numRodadas;
+	public void setVez(boolean vez) {
+		this.vez = vez;
+	}
+	public int getNumEscolhas() {
+		return numEscolhas;
+	}
+	public void setNumEscolhas(int numRodadas) {
+		this.numEscolhas = numRodadas;
 	}
 	public ArrayList<Heroi> getHerois() {
 		return herois;
@@ -126,4 +201,37 @@ public class Jogador {
 	public void setTotalJogos(int totalJogos) {
 		this.totalJogos = totalJogos;
 	}
+
+	public int getContadorHeroi() {
+		return contadorHeroi;
+	}
+
+	public void setContadorHeroi(int contadorHeroi) {
+		this.contadorHeroi = contadorHeroi;
+	}
+
+	public int getContadorPosicao() {
+		return contadorPosicao;
+	}
+
+	public void setContadorPosicao(int contadorPosicao) {
+		this.contadorPosicao = contadorPosicao;
+	}
+
+	public int getImagem() {
+		return imagem;
+	}
+
+	public void setImagem(int imagem) {
+		this.imagem = imagem;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+	
 }

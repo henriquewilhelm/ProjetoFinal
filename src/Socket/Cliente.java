@@ -78,7 +78,6 @@ public class Cliente {
 		public void setSaida(PrintStream saida) {
 			this.saida = saida;
 		}
-		
 }
 	 
 	 
