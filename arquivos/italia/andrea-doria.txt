@@ -1,0 +1,13 @@
+Class & type:	Andrea Doria-class cruiser
+Displacement:	6,500 long tons (6,604 t)
+Length:	149.2 m (489 ft 6 in)
+Beam:	17.2 m (56 ft 5 in)
+Draught:	5 m (16 ft 5 in)
+Propulsion:	Steam turbines, 4 boilers, 2 shafts, 60,000 shp (45 MW)
+Speed:	30 knots (56 km/h; 35 mph)
+Range:	3,500 nmi (6,500 km)
+Complement:	485
+Armament:	• 1 × Terrier SAM (40 missiles)
+• 8 × 76 mm AA guns
+• 6 × 12.75 in (324 mm) torpedo tubes
+Aircraft carried:	4 helicopters

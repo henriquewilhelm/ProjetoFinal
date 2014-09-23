@@ -1,0 +1,19 @@
+Bismarck
+
+Características gerais
+Classe	Bismarck
+Deslocamento	41 700 t (padrão)
+50 300 t (carregado)
+Comprimento	251 m
+Boca	36 m
+Calado	9,3 mnota 1
+Propulsão	12 caldeiras Wagner
+Velocidade	30.01 nós (55.58 km/h)
+Autonomia	8 870 milhas náuticas a 19 nós(16 430 km à 35 km/h)
+Armamento	8 canhões SK C/34 de 380 mm
+12 canhões SK C/28 de 150 mm
+16 FlaK 38 antiaéreas de 105 mm
+16 SK C/30 antiaéreas de 37 mm
+12 Flak 30 antiaéreas de 20 mm
+Aeronaves	4 hidroaviões Arado Ar 196
+Tripulação	2 200

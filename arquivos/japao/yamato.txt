@@ -1,0 +1,32 @@
+Yamato
+Características gerais
+Tipo de navio	Couraçado
+Classe	Yamato
+Deslocamento	65 027 t (padrão)
+71 659 t (carregado)
+Comprimento	263 m
+Boca	38.9 m
+Calado	11 m
+Propulsão	12 caldeiras Kampon
+4 turbinas a vapor
+4 hélices de três lâminas
+Velocidade	27 nós (50 km/h)
+Autonomia	7 200 milhas náuticas à 16 nós (13 334 km à 30 km/h)
+Blindagem	650 mm na frente das torres
+410 mm nas laterais
+200 mm no convés central
+226.5 mm nas pontas do convés
+Armamento	1941:
+9 canhões de 460 mm
+12 canhões de 155 mm
+12 canhões de 127 mm
+24 canhões de 25 mm
+4 canhões de 132 mm
+1945:
+9 canhões de 460 mm
+6 canhões de 155 mm
+24 canhões de 127 mm
+162 canhões de 25 mm antiaéreos
+4 canhões de 132 mm
+Aeronaves	7
+Tripulação	2 500–2 800

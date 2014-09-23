@@ -1,0 +1,22 @@
+Akagi
+Características gerais
+Tipo de navio	Navio aeródromo
+Deslocamento	37 100 toneladas (81 800 000 libras)
+Comprimento	260,67 metros (855 pés)
+Boca	31,32 metros (103 pés)
+Calado	8,71 metros (28,6 pés)
+Propulsão	4x turbinas à vapor Kampon
+4x hélices
+133 000 hp (99 200 kW)
+Velocidade	31.5 nós (58.3 km/h)
+Autonomia	19 000 quilômetros (10 300 milhas náuticas) a 16 nós (30 km/h)
+Blindagem	Cinta com 152 milímetros (5,98 polegadas)
+Convés 79 milímetros (3,11 polegadas)
+Armamento	6x canhões de 200 milímetros (7,9 polegadas)
+6x canhões anti-aéreos duplos de 120 milímetros (4,7 polegadas)
+14x canhões anti-aéreos de 25 milímetros (0,98 polegadas)
+Aeronaves	66 (+ 25 reserva)
+18x Mitsubishi A6M Zero
+18x Aichi D3A2
+27x Nakajima B5N (em dezembro de 1941)
+Tripulação	1630 homens e oficiais

@@ -1,0 +1,11 @@
+HMS Illustrious (R06)
+Características gerais
+Tipo de navio	Porta-aviões
+Classe	Classe Invincible
+Deslocamento	22 000
+Comprimento	210 m
+Propulsão	4 × turbinas a gás Rolls-Royce Olympus TM3B gerando 97 000 hp (75 MW); 8 geradores diesel Paxman Valenta
+Velocidade	28 nós
+Armamento	3 armas × Goalkeeper CIWS (Close-in Weapon System)
+10 × GAM-B01 20
+Tripulação	726 tripulantes; 384 força 

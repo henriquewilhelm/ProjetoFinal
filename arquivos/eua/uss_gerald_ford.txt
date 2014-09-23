@@ -1,0 +1,15 @@
+USS Gerald R. Ford (CVN-78)
+Características gerais
+Classe	Classe Gerald R. Ford, porta-aviões
+Tonelagem	100 000 toneladas
+Largura	78 m
+Comprimento	337 m
+Calado	76 m
+Propulsão	Dois reatores nucleares A1B
+4 hélices
+Velocidade	30 nós (56 km/h)
+Armamento	Sea Sparrow Missile
+Rolling Airframe Missile
+Close-in weapon system (CIWS)
+Aeronaves	+ 75
+Tripulação	4 660 (tripulação do navio e pessoal de vôo)

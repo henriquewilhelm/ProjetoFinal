@@ -1,0 +1,21 @@
+USS Enterprise (CVN-65)
+Características gerais
+Tipo de navio	Porta-aviões
+Classe	classe Enterprise
+Deslocamento	94 781 t (carregado)
+Comprimento	342 m
+Boca	40.5 m
+Calado	12 m
+Propulsão	8 reatores nucleares A2W
+4 conjuntos de turbinas a vapor
+4 eixos
+Velocidade	33.6 nós (62.2 km/h)
+Autonomia	Ilimitado - 20 a 25 anos
+Blindagem	Cinturão de alumínio de 200 mm
+Armamento	2 RIM-7 Sea Sparrow
+2 Phalanx CIWS
+2 RIM-116 Rolling Airframe Missile
+Aeronaves	Até 90
+Equipamentos especializados	Radar AN/SPS-48 3D
+Radar AN/SPS-49 2D
+Tripulação	5 828

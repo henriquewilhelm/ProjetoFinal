@@ -1,4 +1,4 @@
-package Socket;
+package socket;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -25,6 +25,7 @@ public class ThreadClientInput implements Runnable {
 		   		try{
 		   			while (s.hasNextLine()) {
 		   				cliente.setComandoEntrada(s.nextLine());
+		   				//System.out.println("Cliente recebe:"+ cliente.getComandoEntrada());
 		   			}
 		   		}catch (Exception e) {
 					// TODO: handle exception

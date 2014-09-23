@@ -1,0 +1,37 @@
+Displacement:	7,500 tons standard
+8,850 tons full loaded
+Length:	179.6 m
+Beam:	19.4 m
+Draught:	200.0 m
+Propulsion:	2 shaft geared turbines
+4 Foster Wheeler boilers, 73,000 hp
+Speed:	30 knots
+Range:	5,000 miles at 16 knots
+Complement:	557
+Sensors and
+processing systems:	1 × SPS-52 early warning radar
+1 × SPS-768 long range radar
+1 × SPQ-2 surface radar
+2 × SPG-55 missile fire control radar
+4 × Orion 10X fire control radar
+2 × Orion 20X fire control radar
+1 × navigation radar
+Electronic warfare
+& decoys:	2 × SCLAR decoy launcher
+1 × ECM system
+1 × TACAN
+Armament:	As built:
+1 x Mk 10 twin-arm launcher for 40 RIM-2 Terrier and 20 ASROC missiles
+8 × Oto Melara 76/62mm MMI or 76/62 mm Compact gun
+2 x 324 mm triple torpedo tubes
+Post 1980-1982 modernization:
+1 × Mk 10 twin-arm launcher with 40 Standard SM-1ER and 20 RUR-5 "ASROC" missiles
+8 × Oto Melara 76/62mm MMI or 76/62 mm Compact gun
+3 × Oto Melara Twin 40L70 DARDO
+4 × OTOMAT SSMs
+2 x 324 mm triple torpedo tubes
+Aircraft carried:	9 Augusta AB204 or Augusta AB 212 helicopters or 6 AB-61 helicopters
+Notes:	Pennant 550
+
+---------------------------------------------------------------------------------------------
+

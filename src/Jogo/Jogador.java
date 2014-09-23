@@ -1,4 +1,4 @@
-package Jogo;
+package jogo;
 
 import java.util.ArrayList;
 
@@ -24,46 +24,43 @@ import java.util.ArrayList;
 
 public class Jogador {
 
+	private int id = 0;
 	private String nome;
 	private String senha;
 	private int numEscolhas = 1;
-	private ArrayList<Heroi> herois;
-	private int vida;
-	private int imagem;
-	private String pais;
-	private int numeroNavios;
-	private int medalhas;
-	private int vitorias;
-	private int derrotas;
-	private int totalJogos;
+	private ArrayList<Heroi> herois = new ArrayList<Heroi>();
+	private int vida = 15;
+	private int imagem = 0;
+	private String pais = "eua";
+	private int numeroNavios = 5;
+	private int medalhas = 0;
+	private int vitorias = 0;
+	private int derrotas = 0;
+	private int totalJogos = 0;
 	// Auxiliares
 	private int contadorHeroi = 0;
 	private int contadorPosicao = 0;
 	private boolean vez = false;
 	
 	public Jogador(){
-		this.nome = "";
-		this.imagem = 0;
-		this.herois = new ArrayList<Heroi>();
-		this.numeroNavios = 5;
-		this.vida = 15;
-		this.medalhas = 0;
-		this.vitorias = 0;
-		this.derrotas = 0;
-		this.totalJogos = 0;
 		this.criaHerois();
 	}
 	
-	public Jogador(String nome){
-		setNome(nome);
-		this.imagem = 0;
-		this.herois = new ArrayList<Heroi>();
-		this.numeroNavios = 5;
-		this.vida = 15;
-		this.medalhas = 0;
-		this.vitorias =0;
-		this.derrotas = 0;
-		this.totalJogos = 0;
+	public Jogador(String nome, String senha) {
+		this.nome = nome;
+		this.senha = senha;
+		this.criaHerois();
+	}
+	
+	public Jogador(String nome, String senha, int imagem, String pais, int medalhas, int vitorias, int derrotas, int totalJogas){
+		this.nome = nome;
+		this.senha = senha;
+		this.imagem = imagem;
+		this.pais = pais;
+		this.medalhas = medalhas;
+		this.vitorias = vitorias;
+		this.derrotas = derrotas;
+		this.totalJogos = totalJogas;
 		this.criaHerois();
 	}
 
@@ -111,7 +108,7 @@ public class Jogador {
 	public boolean verificaPosicao(int posicao) {
 		 for (int contadorHeroi = 0; contadorHeroi < 5; contadorHeroi++){
 	        	for (int contadorPosicao = 0; contadorPosicao < this.getHerois().get(contadorHeroi).getPosicao().length; contadorPosicao++){
-	        		if (this.getHerois().get(contadorHeroi).getPosicao()[contadorPosicao].getX() == posicao){
+	        		if (this.getHerois().get(contadorHeroi).getPosicao()[contadorPosicao].getXY() == posicao){
 						return true;
 	        		}
 	        	}
@@ -123,7 +120,7 @@ public class Jogador {
 		int aux = 0; 
 		for (int contadorHeroi = 0; contadorHeroi < 5; contadorHeroi++){
 	        	for (int contadorPosicao = 0; contadorPosicao < this.getHerois().get(contadorHeroi).getPosicao().length; contadorPosicao++){
-	        		if (this.getHerois().get(contadorHeroi).getPosicao()[contadorPosicao].getX() == posicao){
+	        		if (this.getHerois().get(contadorHeroi).getPosicao()[contadorPosicao].getXY() == posicao){
 	        			aux = contadorHeroi;
 	        		}
 	        	}
@@ -131,11 +128,24 @@ public class Jogador {
 		return aux;
 	}
 
+	public void atualizaHerois(String pais[]){
+		for (int contadorHeroi = 0; contadorHeroi < 5; contadorHeroi++){
+			this.herois.get(contadorHeroi).setNome(pais[contadorHeroi]);
+		}
+	}
 	// S and G
 	
 	public String getNome() {
 		return nome;
 	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getSenha() {
 		return senha;
 	}

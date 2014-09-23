@@ -1,0 +1,18 @@
+Carreira	Japanese Navy Ensign
+Características Gerais
+Deslocamento:	32105 toneladas (carga máxima),
+25675 toneladas (normal)
+Comprimento:	257,5 m (845 pés)
+Largura:	26 m (85 pés)
+Altura da linha de água:	8,8 m (29 pés)
+Propulsão:	Gerador de turbinas Kanpon,
+160000 hp (119 MW),
+4 eixos
+Velocidade:	34,2 Nós (63.3 km/h)
+Autonomia:	9700 milhas náuticas a 18 nós
+(18000 km a 33 km/h)
+Tripulação:	1660
+Armamento:	dezeseis canhões de 5 polegadas (127 mm) metralhadoras AA (Tipo 98)
+70 metralhadoras de 25 mm (Tipo 96)
+Aeronaves:	84 total
+27 A6M Zeros, 27 D4Y Judy e 18 B6N Jill (Zuikaku em Outubro 1944)

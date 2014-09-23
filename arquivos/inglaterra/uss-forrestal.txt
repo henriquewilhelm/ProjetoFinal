@@ -1,0 +1,30 @@
+USS Forrestal (CVA-59)
+Características gerais
+Tipo de navio	Navio aeródromo
+Classe	Classe Forrestal
+Deslocamento	81 101 t (179 000 000 lb)
+Largura	72,5 m (238 ft)
+Comprimento	325 m (1 070 ft)
+Boca	39,42 m (129 ft)
+Calado	11 m (36,1 ft)
+Propulsão	Turbinas a vapor
+4x hélices
+260 000 hp (194 000 kW)
+Velocidade	33 kn (61,2 km/h)
+Armamento	8x canhões de 127 mm (5,00 in)
+Lançadores de misseis Sea Sparrow Mk 29
+Sistema de defesa Phalanx CIWS Mk 15
+Aeronaves	Aprox. 85; sendo composta de:
+F-14 Tomcat
+F-4 Phantom II
+McDonnell Douglas A-4 Skyhawk
+Vought A-7 Corsair II
+A-6 Intruder
+Grumman E-2 Hawkeye
+Lockheed S-3 Viking
+EA-6B Prowler
+Grumman C-2 Greyhound
+Sikorsky SH-3 Sea King
+A-3 Skywarrior
+Lockheed Martin KC-130 (teste de voo)
+Tripulação	552 oficiais, 4988 alistados

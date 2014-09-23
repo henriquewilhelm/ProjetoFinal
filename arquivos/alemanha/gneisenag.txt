@@ -1,0 +1,17 @@
+Gneisenau
+
+Características gerais
+Classe	Scharnhorst
+Deslocamento	32 100  t (standard)
+38 100 t (pela carga)
+Comprimento	235 metros
+Boca	30 metros
+Calado	9,70 metros
+Propulsão	151 893 shp
+Velocidade	31 nós
+Autonomia	7 100 mn
+Armamento	9 canhões de 283 mm
+12 canhões de 150 mm
+14 AA de 105 mm, 16 AA de 37 mm, 10 AA de 20 mm
+Aeronaves	3 hidroaviões Arado Ar 196 A-3, uma catapulta de lançamento
+Tripulação	1 669 (56 oficiais, 1 613 marinheiro

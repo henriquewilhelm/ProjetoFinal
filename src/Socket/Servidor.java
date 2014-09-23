@@ -1,4 +1,4 @@
-package Socket;
+package socket;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -7,7 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.*;
 
-import Jogo.Jogador;
+import arquivos.EscreveArquivo;
+import jogo.Jogador;
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.0
  * (Servidor)
@@ -26,7 +27,7 @@ public class Servidor {
 	   private PrintStream saida;			// Saida Padrao do Server/Socket
 	   private ServerSocket servidor; 
 	   private int numeroConexao = 1;
-	   
+	   private int totalConexoes= 0;
 	   private Jogador player1;
 	   private Jogador player2;
 	   
@@ -40,28 +41,28 @@ public class Servidor {
 		   	try{
 		   			// Cria e instancia ServerSocket (Passando a Porta)
 		   			servidor = new ServerSocket(this.porta);
+		   			EscreveArquivo log = new EscreveArquivo();
 		   			// Escreve no Console
-		   			System.out.println("Servidor -  Informação: Porta " + this.porta + " aberta...");
-			   		player1 = new Jogador("Player 1");
-				   	player2 = new Jogador("Player 2");	
-				   	player1.criaHerois();
-				   	player2.criaHerois();
-				   	
-		   			// Esperando clientes
+		   			System.out.println("* Servidor do Projeto do GeracaoTEC (Batalha Naval) - Porta " + this.porta + " aberta...");
+		   			log.escreve("* Servidor do Projeto do GeracaoTEC (Batalha Naval) - Porta " + this.porta + " aberta..."); 
+		   			this.player1 = new Jogador();
+		   			this.player2 = new Jogador();
+		   			// Esperando clientes	
 		   			while (true) {
 		   				if (numeroConexao<=2){
-		   						// Aceita um cliente
+		   					// Aceita um cliente
 		   					Socket cliente = servidor.accept();
-		   					System.out.println("Servidor - Conexao numero: " + numeroConexao + " Endereco do Cliente: " +   
-		   							cliente.getInetAddress().getHostAddress());
-		   					// L� msgs vinda do cliente e adiconando ao ArrayList de Saida Padrao do Server/Socket
+		   					System.out.println("- Handshake realizado - Conexao numero: " + numeroConexao + " Endereco do Cliente: " + cliente.getInetAddress().getHostAddress());
+		   					log.escreve("- Handshake realizado - Conexao numero: " + numeroConexao + " Endereco do Cliente: " + cliente.getInetAddress().getHostAddress());
+		   					// Le msgs vindas do cliente e adiconando ao ArrayList de Saida Padrao do Server/Socket
 		   					saida = new PrintStream(cliente.getOutputStream());
 		   					this.clientes.add(numeroConexao-1, saida);
 	       
 		   					// Thread para receber mensagens do cliente (InputStream e Servidor)
-		   					ThreadServInput ThreadServ = new ThreadServInput(cliente.getInputStream(), this, numeroConexao, player1, player2);
+		   					ThreadServInput ThreadServ = new ThreadServInput(cliente.getInputStream(), this, numeroConexao, this.player1, this.player2, log);
 		   					new Thread(ThreadServ).start();
 		   				}
+		   			
 		   				if (numeroConexao==3){
 		   					//broadCast("PRONTO");
 		   				}
@@ -72,10 +73,10 @@ public class Servidor {
 		   					numeroConexao++;
 		   				}
 		   			}
-		   			
 		   	}catch (Exception e) {
 		   			// TODO: handle exception
 		   			e.printStackTrace();
+		   			servidor.close();
 		   	}	 
 	   
 	   }
@@ -85,6 +86,7 @@ public class Servidor {
 	   }
 	   // Envia mensagem a todos clientes conectados;
 	   public void broadCast(String msg) {
+		   			//System.out.println("servidor broadcast: "+msg);
 		   			// Envia mensagem para todos
 		   			for (PrintStream cliente : this.clientes) {
 		   							cliente.println(msg);
@@ -94,6 +96,7 @@ public class Servidor {
 	   public void uniCast(int index, String msg) {
 		   			// Envia mensagem para cliente especifico
 		   			clientes.get(index).println(msg);
+		   			//System.out.println("servidor unicast para cliente "+index+": "+msg);
 	   }
 	   // Getters and Setters
 	   public int getNumeroConexao() {

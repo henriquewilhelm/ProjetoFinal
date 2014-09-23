@@ -1,0 +1,22 @@
+Class & type:	Andrea Doria-class cruiser
+Displacement:	6,500 long tons (6,604 t)
+Length:	144.0 m (472 ft 5 in) pp
+149.2 m (489 ft 6 in) overall
+Beam:	17.3 m (56 ft 9 in)
+Draught:	5.0 m (16 ft 5 in)
+Propulsion:	Steam turbines, 4 boilers, 2 shafts, 60,000 shp (45 MW)
+Speed:	30 knots (56 km/h; 35 mph)
+Range:	5,000 nmi (9,300 km) at 7 kn (13 km/h; 8.1 mph)
+Complement:	485
+Sensors and
+processing systems:	
+1× SPS-12 air search radar
+1× SPS-39 3D air search radar
+1× SPQ-2 air/surface search radar
+2× SPG-55 missile fire control radar
+4× RTN 10X gun fire control radar[2]
+SQS-39 sonar
+Armament:	• 1 × twin rail Terrier SAM (40 missiles[3])
+• 8 × 76mm/L62 Allargato AA guns
+• 6 × 12.75 in (324 mm) torpedo tubes
+Aircraft carried:	4 helicopters

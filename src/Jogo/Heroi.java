@@ -1,4 +1,4 @@
-package Jogo;
+package jogo;
 
 /**
  * Atributos da classe Heroi 

@@ -1,0 +1,25 @@
+HMS Hood
+
+Características gerais
+Tipo de navio	Cruzador de Batalha
+Classe	Admiral
+Deslocamento	46 680 t (carregado)
+Comprimento	262.3 m
+Boca	31.8 m
+Calado	9.8 m
+Propulsão	4 turbinas a vapor 24 caldeiras
+4 hélices de três lâminas
+Velocidade 31 nós (57 km/h) (1920)28 nós (52 km/h) (1941)
+Autonomia	5 332 milhas náuticas à 20 nós
+(9 870 km à 37 km/h) (1931)
+Armamento	
+8 canhões de 340 mm
+12 canhões de 140 mm
+4 canhões antiaéreos de 101 mm
+Quando afundou:
+8 canhões de 380 mm
+7 canhões de 101 mm
+3 canhões automáticos de 40 mm
+5 metralhadoras de 12 mm
+Tripulação	1 433 (1920)
+1 325 (1934)

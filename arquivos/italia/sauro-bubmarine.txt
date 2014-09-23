@@ -1,0 +1,19 @@
+Displacement:	Sauro subclass:[1]
+1,456 tons surfaced
+1,641 tons submerged
+Salvatore Pelosi subclass:[1]
+1,476 tons surfaced
+1,662 tons submerged
+Primo Longobardo subclass:[1]
+1,653 tons surfaced
+1,862 tons submerged
+Length:	63.9-66 m
+Beam:	6.83 m
+Draught:	5.7-6.3 m
+Propulsion:	1 shaft diesel (3,210 hp) plus electric (3,650 hp)
+Speed:	12 knots surfaced
+19 knots submerged
+Range:	7,000 nm
+Test depth:	300 m
+Complement:	7 officers, 44 men
+Armament:	6 x 533 mm torpedo tubes, 12 torpedoes or 24 mines carried

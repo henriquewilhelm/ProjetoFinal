@@ -1,0 +1,28 @@
+IJN Musashi
+Características gerais
+Tipo de navio	Couraçado
+Classe	classe Yamato
+Tonelagem	69 200 t
+Comprimento	263 m
+Boca	36,9 m
+Calado	10,86 m
+Velocidade	27,46 nós (50,86 km/h)
+Blindagem	
+Cinturão de 410 mm
+Anteparas de 300 a 340 mm
+Barbetas de 380 a 560 mm
+Torreta de 240 a 650 mm
+Convés de 200 a 230 mm
+Armamento:
+3 canhões de 460 mm
+4 canhões triplos de 155 mm
+6 canhões de 127 mm
+12 canhões anti-aéreos de 25 mm
+2 canhões anti-aéreos de 132 mm
+3 canhões de 460 mm
+2 canhões triplos de 155 mm
+6 canhões de 127 mm
+35(triplo),25 canhões anti-aéreos de 25 mm
+2 canhões anti-aéreos de 132 mm
+Aeronaves	6 a 7 Hidroaviões
+Tripulação	2 500(1942) ,2 800(1944)

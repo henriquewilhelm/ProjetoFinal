@@ -1,0 +1,28 @@
+Classe Nimitz
+Características gerais
+Deslocamento	100 000 t
+Comprimento	333 m no convés
+317 m na linha de flutuação1
+Boca	76,8 m ao nível do convés
+40,8 m na linha de flutuação
+Calado	11,3 m
+Propulsão	
+2x reatores nucleares de água pressurizada Westinghouse A4W
+4x turbinas a vapor
+4x eixos
+Velocidade	30+ nós (56+ km/h)
+Autonomia	ilimitado (20-25 anos)
+Armamento	
+16 a 24 mísseis RIM-7 Sea Sparrow ou Sea Sparrow da OTAN
+3 ou 4 pontos de defesa Phalanx CIWSs ou RIM-116 Rolling Airframe Missiles
+Sensores	
+AN/SPS-48E radar de pesquisa aérea 3-D
+AN/SPS-49(V) 5 radar de pesquisa aérea 2-D
+AN/SPQ-9B radar de aquisição de alvos
+AN/SPN-46 radar de controlo de tráfego aéreo
+AN/SPN-43C radar de controlo de tráfego aéreo
+AN/SPN-41 radar de ajuda ao pouso de aeronaves
+4 × Mk 91 sistema de controlo duplo para disparo e guiamento de mísseis
+4 × Mk 95 radar de controlo de fogo
+Aeronaves	85 a 90 aeronaves de asa fixa e helicópteros1
+Tripulação	5 680 dos quais 2 480 pertencem à componente aérea1

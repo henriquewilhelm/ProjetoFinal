@@ -1,9 +1,16 @@
-	package Socket;
+	package socket;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.io.InputStream;
 
-import Jogo.Jogador;
+import jogo.Jogador;
+import arquivos.EscreveArquivo;
+import bancoDados.JDBCConnect;
+import bancoDados.JogadorDAO;
 /**
  * Batalha Naval (Ultimate Battle) - Versao 2.0
  * (Thread Server Input)
@@ -21,25 +28,24 @@ public class ThreadServInput implements Runnable {
 	   private boolean enviaDados;
 	   private Jogador player1;
 	   private Jogador player2;
-	   
+	   private EscreveArquivo log;
 	   //
-	   public ThreadServInput(InputStream cliente, Servidor servidor, int numeroConexao, Jogador player1,  Jogador player2) {
-	     this.cliente = cliente;
-	     this.servidor = servidor;
-	     this.numeroConexao = numeroConexao;
-	     this.player1 = player1;
-	     this.player2 = player2;
-	   }
-	   // Servidor recebe msgs de um cliente e envia a todos clientes;
+	   public ThreadServInput(InputStream cliente, Servidor servidor, int numeroConexao, Jogador player1, Jogador player2, EscreveArquivo log) {
+			 this.cliente = cliente;
+		     this.servidor = servidor;
+		     this.numeroConexao = numeroConexao;
+		     this.player1 = player1;
+		   	 this.player2 = player2;
+		   	 this.log = new EscreveArquivo();
+	}
+		   // Servidor recebe msgs de um cliente e envia a todos clientes;
 	   public void run() {
-		   		int contador = 0;
-		   		Scanner s = new Scanner(this.cliente);
-		   		String nome = "teste", senha = "123456", pais="";
-		   		int imagem = 0, medalhas = 0, vitorias = 0, derrotas = 0, totalJogos = 0;
-		   		int numeroMsg = 0;		
-		   		char[] protocolo;
-		   		try{
-		   			while (s.hasNextLine()) {
+			 int contador = 0;
+			 Scanner s = new Scanner(this.cliente);   	
+			 int numeroMsg = 0;		
+			 char[] protocolo;
+			 try{
+			   		while (s.hasNextLine()) {
 		   					/** A primeira letra da String sera o identificador
 		   				 	* # - Escolha de Pecas/Posicoes (Enquanto < numero De Navio)
 		   				 	* @ - Ataque ao oponente
@@ -50,55 +56,61 @@ public class ThreadServInput implements Runnable {
    							String msg = s.nextLine();
    							numeroMsg++;
    							protocolo = msg.toString().toCharArray();
-   	   						// Msg do sistema (Comunicacao do Jogo - comeÃ§a, game over e parabens)
+   							// Msg do sistema (Comunicacao do Jogo - comeÃ§a, game over e parabens)
    							if (protocolo[0] == '$') {
    									if (this.numeroConexao == 1){
-   	   										// Informa jogador e  do player 1
-   	   										// protocolo[1]; ï¿½ o valor da posicao
-   	   										if (leStringProtocolo(protocolo).equals(nome)){
-   	   												login = true;
+   											log.escreve("<- Comunicacao - Protocolo (Login/Consulta BD) recebendo informacao do Jogador 1: " + msg);
+   											System.out.println("<- Comunicacao - Protocolo (Login/Consulta BD) recebendo informacao do Jogador 1: " + msg);
+   											if (!login){ //CONSULTA BD
+   	   												player1.setNome(leStringProtocolo(protocolo));
+   	   												login = validaNome(player1.getNome());
+   	   												player1.setId(verificaId(player1.getNome()));
+   	   												System.out.println("--> Comunicacao - Jogador 1 Consulta no BD por Nome: "+player1.getNome()+" e envia $OK1");
+   	   												System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Id: "+player1.getId());
    	   												servidor.uniCast(0,"$OK1");
    	   										}
-   	   										else if (leStringProtocolo(protocolo).equals(senha)){
+   	   										else if (!enviaDados){ //CONSULTA BD
    	   											if (login){
+   	   												enviaDados = validaSenha(leStringProtocolo(protocolo), player1.getId());
+   	   												System.out.println("--> Comunicacao - Jogador 1 Consulta no BD por Senha ****** e envia $OK2");
    	   												servidor.uniCast(0,"$OK2");
-   	   												login = false;
-   	   												enviaDados = true;
    	   											}
+   	   											else 
+   	   											System.out.println("-> Comunicacao - Jogador 1 Erro na senha...");
    	   										}
    	   										else if (leStringProtocolo(protocolo).equals("OK") && enviaDados){
-   	   											imagem = 5;
-												pais="eua";
-												medalhas = 5; 
-												vitorias = 29; 
-												derrotas = 5; 
-												totalJogos = 34;
   												if (contador == 0){
-  													Thread.sleep(1000);
-  													servidor.uniCast(0,"$"+imagem);
+  													player1.setImagem(verificaImg(player1.getId()));
+  													servidor.uniCast(0,"$"+this.player1.getImagem()); //CONSULTA BD
+  													System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Imagem e envia $"+player1.getImagem());
   												}
   												else if (contador == 1){
-  													Thread.sleep(1000);
-  													servidor.uniCast(0,"$"+pais);
+  													player1.setPais(verificaPais(player1.getId()));
+  													servidor.uniCast(0,"$"+this.player1.getPais()); //CONSULTA BD
+  													System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Pais e envia $"+player1.getPais());
   												}
   												else if (contador == 2){
-  													Thread.sleep(1000);
-  													servidor.uniCast(0,"$"+medalhas);
+  													player1.setMedalhas(verificaMedalhas(player1.getId()));
+  													servidor.uniCast(0,"$"+this.player1.getMedalhas()); //CONSULTA BD
+  													System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Medalhas e envia $"+player1.getMedalhas());
   												}
   												else if (contador == 3){
-  													Thread.sleep(1000);
-  													servidor.uniCast(0,"$"+vitorias);
+  													player1.setVitorias(verificaVitorias(player1.getId()));
+  													servidor.uniCast(0,"$"+this.player1.getVitorias()); //CONSULTA BD
+  													System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Vitorias e envia $"+player1.getVitorias());
   												}
   												else if (contador == 4){
-  													Thread.sleep(1000);
-  													servidor.uniCast(0,"$"+derrotas);
+  													player1.setDerrotas(verificaDerrotas(player1.getId()));
+  													servidor.uniCast(0,"$"+this.player1.getDerrotas()); //CONSULTA BD
+  													System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Derrotas e envia $"+player1.getDerrotas());
   												}	
   												else if (contador == 5){
-  													Thread.sleep(1000);
-  													servidor.uniCast(0,"$"+totalJogos);
+  													player1.setTotalJogos(verificaTotalJogos(player1.getId()));
+  													servidor.uniCast(0,"$"+this.player1.getTotalJogos()); //CONSULTA BD
+  													System.out.println("-> Comunicacao - Jogador 1 Consulta no BD por Total Jogos e envia $"+player1.getTotalJogos());
   												}
   												else{
-  													Thread.sleep(1000);
+  													System.out.println("--> Comunicacao - Jogador 1 Consulta no BD por Total Jogos e envia $OK3");
   													servidor.uniCast(0,"$OK3");
   													enviaDados = false;
   												}
@@ -107,64 +119,67 @@ public class ThreadServInput implements Runnable {
    	   										else{
 	   											servidor.uniCast(0,"$Dado incorreto");
 	   										}
-   	   										System.out.println("Informacao do cliente 1: " + msg);
    									}	
    									if (this.numeroConexao == 2){		
-   										// Marca local da peï¿½a/navio no tabuleiro/mapa do player 2
-   										// protocolo[1]; ï¿½ o valor da posicao
-   										if (leStringProtocolo(protocolo).equals(nome)){
-   	   											login = true;
-   	   											servidor.uniCast(1,"$OK1");
-   										}
-   										else if (leStringProtocolo(protocolo).equals(senha)){
-   	   											if (login){
-   	   												servidor.uniCast(1,"$OK2");
-	   												login = false;
-	   												enviaDados = true;
-   	   											}
-   										}
-   										else if (leStringProtocolo(protocolo).equals("OK") && enviaDados){
-	   										imagem = 2;
-											pais="japao";
-											medalhas = 1; 
-											vitorias = 5; 
-											derrotas = 15; 
-											totalJogos = 20;
-												if (contador == 0){
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$"+imagem);
-												}
-												else if (contador == 1){
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$"+pais);
-												}
-												else if (contador == 2){
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$"+medalhas);
-												}
-												else if (contador == 3){
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$"+vitorias);
-												}
-												else if (contador == 4){
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$"+derrotas);
-												}	
-												else if (contador == 5){
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$"+totalJogos);
-												}
-												else{
-													Thread.sleep(1000);
-													servidor.uniCast(1,"$OK3");
-													enviaDados = false;
-												}
-												contador++;
+   										log.escreve("<- Comunicacao - Protocolo (Login/Consulta BD) recebendo informacao do Jogador 2 envia: " + msg);
+   										System.out.println("<- Comunicacao - Protocolo (Login/Consulta BD) recebendo informacao do Jogador 2 envia: " + msg);
+   										if (!login){ //CONSULTA BD
+  												player2.setNome(leStringProtocolo(protocolo));
+  												login = validaNome(player2.getNome());
+  												player2.setId(verificaId(player2.getNome()));
+  												System.out.println("--> Comunicacao - Jogador 2 Consulta no BD por Nome: "+player2.getNome()+" e envia $OK1");
+  												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Id: "+player2.getId());
+  												servidor.uniCast(1,"$OK1");
+  										}
+  										else if (!enviaDados){ //CONSULTA BD
+  											if (login){
+  												enviaDados = validaSenha(leStringProtocolo(protocolo), player2.getId());
+  												servidor.uniCast(1,"$OK2");
+  												System.out.println("--> Comunicacao - Jogador 2 Consulta no BD por Senha: ****** e envia $OK2");
+  											}
+  										}
+  										else if (leStringProtocolo(protocolo).equals("OK") && enviaDados){
+  									
+											if (contador == 0){
+												player2.setImagem(verificaImg(player2.getId()));
+												servidor.uniCast(1,"$"+this.player2.getImagem()); //CONSULTA BD
+												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Imagem e envia $"+player2.getImagem());
+											}
+											else if (contador == 1){
+												player2.setPais(verificaPais(player2.getId()));
+												servidor.uniCast(1,"$"+this.player2.getPais()); //CONSULTA BD
+												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Pais  e envia $"+player2.getPais());
+											}
+											else if (contador == 2){
+												player2.setMedalhas(verificaMedalhas(player2.getId()));
+												servidor.uniCast(1,"$"+this.player2.getMedalhas()); //CONSULTA BD
+												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Medalhas e envia $"+player2.getMedalhas());
+											}
+											else if (contador == 3){
+												player2.setVitorias(verificaVitorias(player2.getId()));
+												servidor.uniCast(1,"$"+this.player2.getVitorias()); //CONSULTA BD
+												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Vitorias  e envia $"+player2.getVitorias());
+											}
+											else if (contador == 4){
+												player2.setDerrotas(verificaDerrotas(player2.getId()));
+												servidor.uniCast(1,"$"+this.player2.getDerrotas()); //CONSULTA BD
+												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Derrotas e envia $"+player2.getDerrotas());
+											}	
+											else if (contador == 5){
+												player2.setTotalJogos(verificaTotalJogos(player2.getId()));
+												servidor.uniCast(1,"$"+this.player2.getTotalJogos()); //CONSULTA BD
+												System.out.println("-> Comunicacao - Jogador 2 Consulta no BD por Total Jogos e envia $"+player2.getTotalJogos());
+											}
+											else{
+												System.out.println("--> Comunicacao - Jogador 2 Consulta no BD por Total Jogos e envia $OK3");
+												servidor.uniCast(1,"$OK3");
+												enviaDados = false;
+											}
+											contador++;
 	   									}
    										else {
    	   										servidor.uniCast(1,"$Dado incorreto");
    										}
-   										System.out.println("Informacao do cliente 2: " + msg);
    									}	
    									if (msg.equals("$QUIT")){ // Mensagens do Sistema (Quit)
    		   								// Desconecta
@@ -176,30 +191,30 @@ public class ThreadServInput implements Runnable {
    	   								if (this.numeroConexao == 1){
    	   										// Informa jogador e  do player 1
    	   										// protocolo[1]; ï¿½ o valor da posicao
-   	   										if (leStringProtocolo(protocolo).equals("H")){
-   	   											servidor.uniCast(0,"Fulano - 0.59");
+   	   										if (leStringProtocolo(protocolo).equals("H")){ 
+   	   											servidor.uniCast(0,"teste"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(0,"Beltrano - 1.29");
+   	   											servidor.uniCast(0,"henrique"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(0,"Ciclano - 2.49");
+   	   											servidor.uniCast(0,"carlos"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(0,"Deltrano - 3.29");
+   	   											servidor.uniCast(0,"otavio"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(0,"Teste - 4.00");
+   	   											servidor.uniCast(0,"usuario"); //CONSULTA BD
    	   										}
    	   										System.out.println("Solicitacao de Consulta ao BD do cliente 1: " + msg);
    	   								}	
    	   								if (this.numeroConexao == 2){		
    	   										if (leStringProtocolo(protocolo).equals("H")){
-   	   											servidor.uniCast(1,"Fulano - 0.59");
+   	   											servidor.uniCast(1,"alexandre"); //CONSULTA BD
+   	   											Thread.sleep(500); 
+   	   											servidor.uniCast(1,"henrique"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(1,"Beltrano - 1.29");
+   	   											servidor.uniCast(1,"carlos"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(1,"Ciclano - 2.49");
+   	   											servidor.uniCast(1,"jaison"); //CONSULTA BD
    	   											Thread.sleep(500);
-   	   											servidor.uniCast(1,"Deltrano - 3.29");
-   	   											Thread.sleep(500);
-   	   											servidor.uniCast(1,"Teste - 4.00");
+   	   											servidor.uniCast(1,"otavio"); //CONSULTA BD
 	   										}
    	   										System.out.println("Solicitacao de Consulta ao BD do cliente 2: " + msg);
    	   								}		
@@ -207,23 +222,22 @@ public class ThreadServInput implements Runnable {
    							//Marcando as escolhas seu Mapa .
    	   						else if (protocolo[0] == '#') {
    	   									if (this.numeroConexao == 1){
+   	   											System.out.println("<- Comunicacao - Protocolo (Jogo/Escolhas) recebendo informacao do Jogador 1: " + msg);
+   	   											log.escreve("<- Comunicacao - Protocolo (Jogo/Escolhas) recebendo informacao do Jogador 1: " + msg);
    	   											// Marca local da peï¿½a/navio no tabuleiro/mapa do player
    	   											// protocolo[1]; ï¿½ o valor da posicao
    	   											player1.addHeroi(leIntProtocolo(protocolo));
-   	   											System.out.println("Servidor: Player 1 - Navio " + player1.getContadorHeroi() + 
-   	   																		" na posicao " + player1.getContadorPosicao()+ " "
-   	   																				+ "recebeu "+ leIntProtocolo(protocolo));
    	   									}	
    	   									if (this.numeroConexao == 2){		
+   	   											System.out.println("<- Comunicacao - Protocolo (Jogo/Escolhas) recebendo informacao do Jogador 2: " + msg);
+   	   											log.escreve("<- Comunicacao - Protocolo (Jogo/Escolhas) recebendo informacao do Jogador 2: " + msg);
    	   											// Marca local da peï¿½a/navio no tabuleiro/mapa do player
    	   											// protocolo[1]; ï¿½ o valor da posicao
    	   											player2.addHeroi(leIntProtocolo(protocolo));
-   	   												System.out.println("Servidor: Player 2 - Navio " + player2.getContadorHeroi() + 
-   	   																		" na posicao " + player2.getContadorPosicao()+ " "
-   	   																				+ "recebeu "+ leIntProtocolo(protocolo));
-   	   									}
+   	   										}
    	   									if (player1.isVez() && player2.isVez()){
    	   											servidor.uniCast(0,"$ini");
+   	   											//System.out.println("COMECOU");
    	   									}
    	   						}
    							// Ataca adversario (Mapa adversario).
@@ -231,42 +245,48 @@ public class ThreadServInput implements Runnable {
    	   								if (this.numeroConexao == 1){
    	   										// Marca local da peï¿½a/navio no tabuleiro/mapa do player 1
    	   										// protocolo[1]; ï¿½ o valor da posicao
-   	   										if (player1.verificaPosicao(leIntProtocolo(protocolo))){
+   	   										if (player2.verificaPosicao(leIntProtocolo(protocolo))){
    	   											servidor.uniCast(0,"&"+leIntProtocolo(protocolo));
    	   											servidor.uniCast(1,msg);
    	   											player2.setVida(player2.getVida()-1);
    	   											Thread.sleep(500);
    	   											// Escreve no Chat
-   	   											servidor.broadCast("Servidor: Ataque do Player 1 na Posicao (" + leIntProtocolo(protocolo) + ") bem sucedido. " +
+   	   											servidor.broadCast("Servidor: Ataque do Jogador "+player1.getNome()+" na Posicao (" + leIntProtocolo(protocolo) + ") bem sucedido. " +
 																	player2.getHerois().get(player2.verificaHeroi(leIntProtocolo(protocolo))).getNome()  + 
 																								" sofreu danos. Vida atual (" + player2.getVida() + ")");
+   	   											log.escreve("<- Comunicacao - Protocolo (Jogo/Ataque) Jogador 1: Ataque "+player1.getNome()+" "
+   	   													+ "na Posicao (" + leIntProtocolo(protocolo) + ") bem sucedido. Embarcação sofreu danos. Vida atual (" + player2.getVida() + ")");
    	   										}
    	   										else{
    	   											servidor.uniCast(0,"*"+leIntProtocolo(protocolo));
    	   											servidor.uniCast(1,msg);
    	   											Thread.sleep(500);
-   	   											servidor.broadCast("Servidor: Ataque do Player 1 na Posicao (" + leIntProtocolo(protocolo) + ") falhou. Player 2 sua vez...");
+   	   											servidor.broadCast("Servidor: Ataque do Jogador "+player1.getNome()+" na Posicao (" + leIntProtocolo(protocolo) + ") falhou. Player 2 sua vez...");
+   	   											log.escreve("<- Comunicacao - Protocolo (Jogo/Ataque) Jogador 1: Ataque do "+player1.getNome()+" na Posicao (" + leIntProtocolo(protocolo) + ") falhou. Passando a vez...");
    	   										}
    	   								}	 
    	   								if (this.numeroConexao == 2){		
    	   										// Marca local da peï¿½a/navio no tabuleiro/mapa do player 2
    	   										// protocolo[1]; ï¿½ o valor da posicao
-   	   										if (player2.verificaPosicao(leIntProtocolo(protocolo))){
+   	   										if (player1.verificaPosicao(leIntProtocolo(protocolo))){
    	   											servidor.uniCast(1,"&"+leIntProtocolo(protocolo));
    	   											servidor.uniCast(0,msg);
    	   											Thread.sleep(500);
    	   											player1.setVida(player1.getVida()-1);
    	   											// Escreve no Chat
-   	   											servidor.broadCast("Servidor: Ataque do Player 2 na Posicao (" + leIntProtocolo(protocolo) + ") bem sucedido. " +
+   	   											servidor.broadCast("Servidor: Ataque do Jogador "+player2.getNome()+" na Posicao (" + leIntProtocolo(protocolo) + ") bem sucedido. " +
 																player1.getHerois().get(player1.verificaHeroi(leIntProtocolo(protocolo))).getNome()  + 
 																							" sofreu um dano. Vida atual (" + player1.getVida() + ")");
+   	   											log.escreve("<- Comunicacao - Protocolo (Jogo/Ataque) Jogador 1: Ataque do "+player2.getNome()+" "
+   	   													+ "na Posicao (" + leIntProtocolo(protocolo) + ") bem sucedido. Embarcação sofreu danos. Vida atual (" + player1.getVida() + ")");
    	   										}
    	   										else {
    	   											servidor.uniCast(1,"*"+leIntProtocolo(protocolo));
    	   											servidor.uniCast(0,msg);
    	   											// Escreve no Chat
    	   											Thread.sleep(1500);
-   	   											servidor.broadCast("Servidor: Ataque do Player 2 na Posicao (" + leIntProtocolo(protocolo) + ") falhou. Player 1 sua vez...");
+   	   											servidor.broadCast("Servidor: Ataque do Jogador "+player2.getNome()+" na Posicao (" + leIntProtocolo(protocolo) + ") falhou. Player 1 sua vez...");
+   	   											log.escreve("<- Comunicacao - Protocolo (Jogo/Ataque) Jogador 2: Ataque do "+player2.getNome()+" na Posicao (" + leIntProtocolo(protocolo) + ") falhou. Passando a vez...");
    	   										}
    	   									}
    	   						}
@@ -277,29 +297,35 @@ public class ThreadServInput implements Runnable {
 										Thread.sleep(500);
 										// Atualiza informacoes de quem ganhou
 										servidor.uniCast(1,"$win");
-										player2.setVitorias(player2.getVitorias()+1);
-										player2.setTotalJogos(player2.getTotalJogos()+1);
+										player2.setVitorias(player2.getVitorias()+1); 
+										player2.setTotalJogos(player2.getTotalJogos()+1); 
 										// Atualiza informacoes de quem perdeu
 										servidor.uniCast(0,"$over");
-										player1.setDerrotas(player1.getDerrotas()+1);
-										player1.setTotalJogos(player1.getTotalJogos()+1);
+										player1.setDerrotas(player1.getDerrotas()+1); 
+										player1.setTotalJogos(player1.getTotalJogos()+1); 
 										// Atualiza Medalhas de quem ganhou
 										if (player2.getVitorias()%5==0)
 											player2.setMedalhas(player2.getVitorias()/5);
+										update(player1); //UPDATE BD
+										update(player2); //UPDATE BD
+										System.out.println("<- Comunicacao - Protocolo (Jogo/Ataque) Jogador 2 Vence...");
 							}
 							if (player2.getVida() == 0) {
 										Thread.sleep(500);
 										// Atualiza informacoes de quem ganhou
 										servidor.uniCast(0,"$win");
-										player1.setVitorias(player1.getVitorias()+1);
-										player1.setTotalJogos(player1.getTotalJogos()+1);
+										player1.setVitorias(player1.getVitorias()+1); 
+										player1.setTotalJogos(player1.getTotalJogos()+1); 
 										// Atualiza informacoes de quem perdeu
 										servidor.uniCast(1,"$over");
-										player2.setDerrotas(player2.getDerrotas()+1);
-										player2.setTotalJogos(player2.getTotalJogos()+1);
+										player2.setDerrotas(player2.getDerrotas()+1); 
+										player2.setTotalJogos(player2.getTotalJogos()+1); 
 										// Atualiza Medalhas de quem ganhou
 										if (player2.getVitorias()%5==0)
-											player2.setMedalhas(player2.getVitorias()/5);
+											player2.setMedalhas(player2.getVitorias()/5); 
+										update(player1); //UPDATE BD
+										update(player2); //UPDATE BD
+										System.out.println("<- Comunicacao - Protocolo (Jogo/Ataque) Jogador 1 Vence...");
 							}
 		   				}
 		   		}catch (Exception e) {
@@ -354,4 +380,140 @@ public class ThreadServInput implements Runnable {
 	public void setNumeroConexao(int numeroConexao) {
 		this.numeroConexao = numeroConexao;
 	}  
+	
+	public boolean validaNome(String nome){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				if (logando.verificaNome(con, nome)) {
+					return true;	
+				} else {
+					System.out.println("! Erro na Consulta ao BD - Nome não localizado...");
+					log.escreve("! Erro na Consulta ao BD - Nome não localizado...");
+					con.close();
+					return false;
+				}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean validaSenha(String senha, int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				
+				if (logando.verificaSenha(con, senha, id)) {
+					return true;
+				
+				} else {
+					System.out.println("! Erro na Consulta ao BD - Nome não localizado...");
+					log.escreve("! Erro na Consulta ao BD - Nome não localizado...");
+					con.close();
+					return false;
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public int verificaId(String nome){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaId(con, nome);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int verificaImg(int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaImg(con, id);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public String verificaPais(int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaPais(con, id);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
+	public int verificaMedalhas(int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaMedalhas(con, id);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int verificaVitorias(int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaVitorias(con, id);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int verificaDerrotas(int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaDerrotas(con, id);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public int verificaTotalJogos(int id){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				return logando.buscaTotalJogos(con, id);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+	public void update(Jogador jogador){
+		try {
+				JDBCConnect conexao = new JDBCConnect();
+				java.sql.Connection con = conexao.criarConexao();
+				JogadorDAO logando = new JogadorDAO();
+				logando.save(con, jogador);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
